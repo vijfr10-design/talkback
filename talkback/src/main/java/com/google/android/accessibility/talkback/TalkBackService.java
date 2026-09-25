@@ -1127,6 +1127,11 @@ public class TalkBackService extends AccessibilityServiceCompat
     // TODO: Clear queues wherever there are message handlers that delay event processing.
   }
 
+  /** Bro Blind Screen Reader: verdadeiro durante a leitura contínua (ler a partir daqui). */
+  public boolean isLeituraContinuaAtiva() {
+    return fullScreenReadActor != null && fullScreenReadActor.isActive();
+  }
+
   private boolean shouldInterruptByAnyKeyEvent() {
     return !fullScreenReadActor.isActive();
   }

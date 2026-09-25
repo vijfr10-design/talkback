@@ -70,8 +70,10 @@ public final class AntecipacaoFoco {
     }
     // Interrompe só a fala anterior, na hora (a fala nova virá com QUEUE_FLUSH do compositor).
     // Não interrompe sons, para não cortar o som de fim de gesto.
+    // Na leitura contínua o foco também anda como navegação lógica, mas depois de cada fala
+    // terminar; ali não há nada para interromper e interromper poderia parar a leitura.
     TalkBackService servico = TalkBackService.getInstance();
-    if (servico != null) {
+    if (servico != null && !servico.isLeituraContinuaAtiva()) {
       servico.getSpeechController().interrupt(/* stopTtsSpeechCompletely= */ false);
     }
     pipeline.returnFeedback(
