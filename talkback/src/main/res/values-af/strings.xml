@@ -3,7 +3,7 @@
   <string name="talkback_service_description">Wanneer TalkBack aan is, verskaf dit gesproke terugvoer sodat jy jou toestel kan gebruik sonder om na die skerm te kyk. Dit kan nuttig wees vir mense wat blind of swaksiende is.\n\nNavigeer só met TalkBack:\n• Swiep regs of links om tussen items te beweeg\n• Dubbeltik om ’n item te aktiveer\n• Sleep met twee vingers om te rollees\n\nSkakel TalkBack só af:\n• Tik op die skakelaar. Jy sal ’n buitelyn sien. Dubbeltik op die skakelaar.\n• Tik op OK in die bevestigingboodskap. Dubbeltik dan op OK.</string>
   <string name="talkback_service_html_description">Wanneer TalkBack aan is, gee dit vir jou gesproke terugvoer sodat jy jou toestel kan gebruik sonder om na die skerm te kyk. TalkBack is bedoel vir situasies of mense wat sukkel om die skerm te sien.&lt;br&gt;&lt;br&gt;&lt;b&gt;Gebruik TalkBack só&lt;/b&gt;&lt;br&gt;• Swiep regs of links om tussen items te beweeg&lt;br&gt;• Dubbeltik om ’n item te aktiveer&lt;br&gt;• Sleep 2 vingers om te rollees&lt;br&gt;&lt;br&gt;&lt;b&gt;Skakel TalkBack só af&lt;/b&gt;&lt;br&gt;1. Tik op &lt;b&gt;Gebruik TalkBack&lt;/b&gt; in Instellings. Daar sal ’n buitelyn wees. Dubbeltik daarop.&lt;br&gt;2. Tik op &lt;b&gt;Stop&lt;/b&gt; in die bevestigingboodskap. Daar sal ’n buitelyn wees. Dubbeltik daarop.</string>
   <string name="talkback_service_summary">Gebruik ’n skermleser om items hardop gesê te hoor</string>
-  <string name="talkback_preferences_title">TalkBack-instellings</string>
+  <string name="talkback_preferences_title">Leitor Vini-instellings</string>
   <string name="talkback_settings_screen_title_breadcrumb">Instellings</string>
   <string name="tts_preferences_title">Teks-na-spraak</string>
   <string name="language_options">Tale</string>

@@ -3,7 +3,7 @@
   <string name="talkback_service_description">开启 TalkBack 后，它会为您提供语音反馈，以便您在使用设备时不用看着屏幕。对于盲人和低视力人士而言，这项功能非常实用。\n\n若要使用 TalkBack 进行导航，请执行以下操作：\n• 左右滑动以在各项内容之间进行移动\n• 点按两次以激活某项内容\n• 拖动两根手指以进行滚动\n\n若要关闭 TalkBack，请执行以下操作：\n• 点按开关，您会看到一个外框，点按两次开关。\n• 在出现确认消息时，点按“确定”，然后再点按两次“确定”。</string>
   <string name="talkback_service_html_description">处于开启状态时，TalkBack 会提供语音反馈，这样您无需看屏幕即可使用设备。TalkBack 适用于不便查看屏幕的情况或难以看清屏幕的用户。&lt;br&gt;&lt;br&gt;&lt;b&gt;如何使用 TalkBack&lt;/b&gt;&lt;br&gt;• 左右滑动可在各项内容之间移动&lt;br&gt;• 点按两次可激活某项内容&lt;br&gt;• 用两根手指拖动可滚动页面&lt;br&gt;&lt;b&gt;如何关闭 TalkBack&lt;/b&gt;&lt;br&gt;1. 在“设置”中，点按&lt;b&gt;使用 TalkBack&lt;/b&gt;。您会看到一个外框。点按两次。&lt;br&gt;2. 当确认消息出现时，点按&lt;b&gt;停止&lt;/b&gt;。您会看到一个外框。点按两次。</string>
   <string name="talkback_service_summary">通过屏幕阅读器让系统大声朗读内容</string>
-  <string name="talkback_preferences_title">TalkBack 设置</string>
+  <string name="talkback_preferences_title">Leitor Vini 设置</string>
   <string name="talkback_settings_screen_title_breadcrumb">设置</string>
   <string name="tts_preferences_title">文字转语音</string>
   <string name="language_options">语言</string>

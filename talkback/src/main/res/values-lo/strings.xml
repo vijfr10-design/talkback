@@ -3,7 +3,7 @@
   <string name="talkback_service_description">ເມື່ອເປີດໃຊ້ TalkBack ແລ້ວ, ມັນຈະໃຫ້ການຕອບສະໜອງແບບສຽງເວົ້າໃຫ້ທ່ານສາມາດໃຊ້ອຸປະກອນຂອງທ່ານໄດ້ໂດຍບໍ່ຕ້ອງເບິ່ງໜ້າຈໍ. ນີ້ຈະເປັນປະໂຫຍດສຳລັບຄົນທີ່ພິການສາຍຕາ ຫຼື ມີບັນຫາດ້ານການເບິ່ງເຫັນ.\n\nເພື່ອນຳທາງໂດຍໃຊ້ TalkBack:\n• ໃຫ້ປັດຂວາ ຫຼື ຊ້າຍເພື່ອເລື່ອນລະຫວ່າງລາຍການ\n• ແຕະສອງເທື່ອເພື່ອເປີດໃຊ້ລາຍການໃດໜຶ່ງ\n• ລາກສອງນິ້ວເພື່ອເລື່ອນ\n\nເພື່ອປິດ TalkBack:\n• ແຕະທີ່ປຸ່ມສະວິດ. ທ່ານຈະເຫັນຂອບສີຂຽວ. ແຕະສອງເທື່ອໃສ່ທີ່ສະວິດດັ່ງກ່າວ.\n• ຢູ່ຂໍ້ຄວາມການຢືນຢັນ, ໃຫ້ແຕະຕົກລົງ. ຈາກນັ້ນແຕະຕົກລົງສອງເທື່ອ.</string>
   <string name="talkback_service_html_description">ເມື່ອເປີດໃຊ້ Talkback ແລ້ວ, ມັນຈະໃຫ້ການຕອບສະໜອງແບບສຽງເວົ້າເພື່ອໃຫ້ທ່ານສາມາດໃຊ້ອຸປະກອນຂອງທ່ານໂດຍບໍ່ຕ້ອງເບິ່ງໜ້າຈໍໄດ້. TalkBack ມີຈຸດປະສົງສຳລັບສະຖານະການ ຫຼື ຄົນທີ່ມີບັນຫາໃນການເບິ່ງເຫັນໜ້າຈໍ.&lt;br&gt;&lt;br&gt;&lt;b&gt;ວິທີໃຊ້ TalkBack&lt;/b&gt;&lt;br&gt;• ປັດຂວາ ຫຼື ຊ້າຍເພື່ອຍ້າຍໄປມາລະຫວ່າງລາຍການຕ່າງໆ&lt;br&gt;• ແຕະສອງເທື່ອເພື່ອເປີດນຳໃຊ້ລາຍການໃດໜຶ່ງ&lt;br&gt;• ລາກ 2 ນິ້ວເພື່ອເລື່ອນ&lt;br&gt;&lt;b&gt;ວິທີປິດ TalkBack&lt;/b&gt;&lt;br&gt;1. ໃນການຕັ້ງຄ່າ, ໃຫ້ແຕະ &lt;b&gt;ໃຊ້ TalkBack&lt;/b&gt;. ເສັ້ນຂອບຈະປາກົດຂຶ້ນ. ໃຫ້ແຕະສອງເທື່ອໃສ່ມັນ.&lt;br&gt;2. ຢູ່ຂໍ້ຄວາມການຢືນຢັນ, ໃຫ້ແຕະ &lt;b&gt;ຢຸດ&lt;/b&gt;. ເສັ້ນຂອບຈະປາກົດຂຶ້ນ. ໃຫ້ແຕະສອງເທື່ອໃສ່ມັນ.</string>
   <string name="talkback_service_summary">ໃຊ້ໂປຣແກຣມອ່ານໜ້າຈໍເພື່ອຟັງສຽງອ່ານລາຍການຕ່າງໆ</string>
-  <string name="talkback_preferences_title">ການຕັ້ງຄ່າ TalkBack</string>
+  <string name="talkback_preferences_title">ການຕັ້ງຄ່າ Leitor Vini</string>
   <string name="talkback_settings_screen_title_breadcrumb">ການຕັ້ງຄ່າ</string>
   <string name="tts_preferences_title">ການປ່ຽນຂໍ້ຄວາມເປັນສຽງເວົ້າ</string>
   <string name="language_options">ພາສາ</string>

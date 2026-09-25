@@ -3,7 +3,7 @@
   <string name="talkback_service_description">‏כשהתכונה Talkback מופעלת, היא מפעילה את קורא המסך הקולי, כך שאפשר להשתמש במכשיר בלי להסתכל במסך. התכונה הזאת שימושית לעיוורים או ללקויי ראייה.\n\n כדי לנווט באמצעות TalkBack:‏\n• מחליקים ימינה או שמאלה כדי לעבור בין פריטים\n• לוחצים לחיצה כפולה כדי להפעיל פריט כלשהו\n• גוררים שתי אצבעות כדי לגלול\n\nכדי לכבות את TalkBack:‏\n• לוחצים על המתג. יופיע קו מתאר. לוחצים לחיצה כפולה על המתג.\n• בהודעת האישור, לוחצים על \'אישור\'. לאחר מכן, לוחצים לחיצה כפולה על \'אישור\'.</string>
   <string name="talkback_service_html_description">‏כשהתכונה TalkBack מופעלת, היא מפעילה את קורא המסך הקולי, כך שאפשר להשתמש במכשיר בלי להסתכל במסך. התכונה TalkBack מיועדת למצבים שבהם קשה לראות את המסך או לאנשים שמתקשים לראות אותו.&lt;br&gt;&lt;br&gt;&lt;b&gt;איך להשתמש ב-TalkBack‏&lt;/b&gt;&lt;br&gt;• מחליקים ימינה או שמאלה כדי לעבור בין פריטים.&lt;br&gt;• לוחצים לחיצה כפולה כדי להפעיל פריט.&lt;br&gt;• גוררים 2 אצבעות כדי לגלול.&lt;br&gt;&lt;b&gt;איך להשבית את TalkBack‏&lt;/b&gt;&lt;br&gt;‏1. בהגדרות, לוחצים על &lt;b&gt;שימוש ב-TalkBack‏&lt;/b&gt;. יוצג קו מתאר. לוחצים לחיצה כפולה על הקו.&lt;br&gt;‏2. בהודעת האישור, לוחצים על &lt;b&gt;עצירה&lt;/b&gt;. יוצג קו מתאר. לוחצים לחיצה כפולה על הקו.</string>
   <string name="talkback_service_summary">שימוש בקורא המסך להקראת פריטים</string>
-  <string name="talkback_preferences_title">‏ההגדרות של TalkBack</string>
+  <string name="talkback_preferences_title">‏ההגדרות של Leitor Vini</string>
   <string name="talkback_settings_screen_title_breadcrumb">הגדרות</string>
   <string name="tts_preferences_title">‏המרת טקסט לדיבור (TTS)</string>
   <string name="language_options">שפות</string>

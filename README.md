@@ -1,20 +1,20 @@
-# Introduction
+# Leitor Vini
 
-This repository contains source code for Google's TalkBack, which is a screen
-reader for blind and visually-impaired users of Android. For usage instructions,
-see
-[TalkBack User Guide](https://support.google.com/accessibility/android/answer/6283677?hl=en).
+Leitor de tela pessoal para Android, baseado no TalkBack do Google
+(licença Apache 2.0, veja LICENSE e NOTICE). Não é afiliado ao Google.
 
-### How to Build
+Identificador do app: `com.vinicius.leitor` (instala ao lado do TalkBack original).
 
-To build TalkBack, run ./build.sh, which will produce an apk file.
+## Baixar
 
-### How to Install
+O APK mais recente é compilado pelo GitHub Actions a cada push e fica em:
+https://github.com/vijfr10-design/talkback/releases/latest/download/LeitorVini.apk
 
-Install the apk onto your Android device in the usual manner using adb.
+## Compilar localmente
 
-### How to Run
+Requer Java 17, Gradle 8.13 ou mais novo, Android SDK e NDK 21.4.7075529.
+Rode `ANDROID_SDK=/caminho/do/sdk ./build.sh` ou `gradle assemblePhoneRelease`.
 
-With the apk now installed on the device, the TalkBack service should now be
-present under Settings -> Accessibility, and will be off by default. To turn it
-on, toggle the switch preference to the on position.
+## Ativar
+
+Instale o APK, abra Configurações > Acessibilidade > Leitor Vini e ative o serviço.

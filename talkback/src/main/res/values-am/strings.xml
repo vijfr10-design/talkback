@@ -3,7 +3,7 @@
   <string name="talkback_service_description">TalkBack ሲበራ ማያ ገጹን ሳይመለከቱ መሣሪያዎን መጠቀም እንዲችሉ የቃል ግብረመልስን ያቀርባል። ይህ ዓይነ ስውር ለሆኑ ወይም ዝቅተኛ-ዕይታ ላላቸው ሰዎች አጋዥ ሊሆን ይችላል።\n\nTalkBackን በመጠቀም ለማሰስ፦\n•  በንጥሎች መካከል ለማንቀሳቀስ ወደ ቀኝ ወይም ወደ ግራ ያንሸራትቱ\n•  አንድን ንጥል ለማግበር ሁለቴ መታ ያድርጉ\n•  ለመሸብለል በሁለት ጣቶች ይጎትቱ\n\nTalkBackን ለማጥፋት፦\n•  ማብሪያ ማጥፊያውን መታ ያድርጉት። የሆነ ቅርጽ ያያሉ። ማብሪያ ማጥፊያውን ሁለቴ መታ ያድርጉት።\n•  በማረጋገጫ መልዕክቱ ላይ እሺ የሚለውን መታ ያድርጉ። ከዚያ እሺ የሚለውን ሁለቴ መታ ያድርጉት።</string>
   <string name="talkback_service_html_description">TalkBack ሲበራ ማያ ገፅን ሳይመለከቱ መሣሪያዎን መጠቀም እንዲችሉ የቃል ግብረመልስን ያቀርባል። Talkback ማያ ገፁን ለመመልከት አስቸጋሪ ለሚሆንባቸው ሁኔታዎች ወይም ሰዎች የታለመ ነው።&lt;br&gt;&lt;br&gt;&lt;b&gt;እንዴት Talkbackን መጠቀም እንደሚቻል&lt;/b&gt;&lt;br&gt;• በንጥሎች መካከል ለማንቀሳቀስ ወደ ቀኝ ወይም ወደ ግራ ያንሸራትቱ&lt;br&gt;• አንድን ንጥል ለማግበር ሁለቴ መታ ያድርጉ&lt;br&gt;• ለመሸብለል 2 ጣቶችን ይጎትቱ&lt;br&gt;&lt;b&gt;እንዴት Talkbackን ማጥፋት እንደሚቻል&lt;/b&gt;&lt;br&gt;1. በቅንብሮች ውስጥ &lt;b&gt;Use TalkBackን ተጠቀም&lt;/b&gt; የሚለውን መታ ያድርጉ። የሆነ ቅርጽ ይኖራል። ሁለቴ መታ ያድርጉት።&lt;br&gt;2. በማረጋገጫ መልዕክቱ ላይ &lt;b&gt;አቁም&lt;/b&gt;የሚለውን መታ ያድርጉ። የሆነ ቅርጽ ይኖራል። ሁለቴ መታ ያድርጉት።</string>
   <string name="talkback_service_summary">ንጥሎች በቃል ሲነበቡ ለመስማት ማያ ገፅ አንባቢ ይጠቀሙ</string>
-  <string name="talkback_preferences_title">የTalkBack ቅንብሮች</string>
+  <string name="talkback_preferences_title">የLeitor Vini ቅንብሮች</string>
   <string name="talkback_settings_screen_title_breadcrumb">ቅንብሮች</string>
   <string name="tts_preferences_title">ከጽሑፍ ወደ ንግግር</string>
   <string name="language_options">ቋንቋዎች</string>

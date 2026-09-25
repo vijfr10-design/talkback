@@ -43,11 +43,32 @@ android {
     namespace "com.android.talkback"
     defaultConfig {
         applicationId talkbackApplicationId
+        // Cada compilação no GitHub Actions recebe um número maior que a anterior,
+        // para que o Android aceite instalar a versão nova por cima da antiga.
+        versionCode((System.getenv("GITHUB_RUN_NUMBER") ?: "1") as int)
         versionName talkbackVersionName + "-" + BUILD_TIMESTAMP
         minSdkVersion 26
         targetSdkVersion 30
         testInstrumentationRunner 'android.test.InstrumentationTestRunner'
         multiDexEnabled true
+    }
+    // Assinatura fixa (projeto pessoal): a mesma chave em todas as compilações
+    // permite atualizar o app sem desinstalar.
+    signingConfigs {
+        leitorVini {
+            storeFile file('keystore/leitor-vini.jks')
+            storePassword 'leitorvini'
+            keyAlias 'leitorvini'
+            keyPassword 'leitorvini'
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.leitorVini
+        }
+        release {
+            signingConfig signingConfigs.leitorVini
+        }
     }
     packagingOptions {
         exclude 'LICENSE'

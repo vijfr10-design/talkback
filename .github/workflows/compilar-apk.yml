@@ -1,0 +1,77 @@
+# Compila o APK do Leitor Vini (variante para celular) e publica num GitHub Release.
+# Roda a cada push em qualquer branch e também pode ser disparado manualmente
+# (aba Actions > "Compilar APK" > "Run workflow").
+name: Compilar APK
+
+on:
+  push:
+    branches: ['**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  compilar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      # O Android Gradle Plugin 8.11.1 exige Java 17 ou mais novo.
+      - name: Instalar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      # O Android Gradle Plugin 8.11.1 exige Gradle 8.13 ou mais novo.
+      - name: Instalar Gradle 8.14.3
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.14.3'
+
+      # Os módulos de braille usam o NDK 21.4.7075529, que não vem instalado no runner.
+      - name: Instalar NDK do Android
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "ndk;21.4.7075529" > /dev/null
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+
+      - name: Compilar APK (celular, release)
+        run: gradle --no-daemon --stacktrace -Dorg.gradle.jvmargs=-Xmx5g assemblePhoneRelease
+
+      - name: Preparar arquivos
+        id: preparar
+        run: |
+          APK=$(find build/outputs/apk/phone/release -name '*.apk' | head -n 1)
+          test -n "$APK"
+          DATA=$(TZ=America/Sao_Paulo date +'%Y-%m-%d_%Hh%M')
+          mkdir -p saida
+          cp "$APK" "saida/LeitorVini_${DATA}.apk"
+          cp "$APK" "saida/LeitorVini.apk"
+          echo "data=$DATA" >> "$GITHUB_OUTPUT"
+          ls -l saida
+
+      - name: Guardar APK como artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: LeitorVini_${{ steps.preparar.outputs.data }}
+          path: saida/LeitorVini_*.apk
+
+      # Cada compilação vira um Release novo marcado como "mais recente".
+      # O link fixo .../releases/latest/download/LeitorVini.apk sempre aponta para ele.
+      - name: Publicar no GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DATA: ${{ steps.preparar.outputs.data }}
+        run: |
+          TAG="build-${GITHUB_RUN_NUMBER}"
+          gh release create "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "Leitor Vini ${DATA} (compilação ${GITHUB_RUN_NUMBER}, branch ${GITHUB_REF_NAME})" \
+            --notes "APK compilado em ${DATA} (horário de Brasília) a partir do commit ${GITHUB_SHA} na branch ${GITHUB_REF_NAME}." \
+            --latest \
+            saida/LeitorVini_${DATA}.apk saida/LeitorVini.apk
