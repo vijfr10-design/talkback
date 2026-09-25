@@ -75,6 +75,7 @@ import java.util.HashSet;
 import java.util.List;
 import org.checkerframework.checker.initialization.qual.UnderInitialization;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import com.vinicius.leitor.velocidade.ConfigVelocidade;
 
 /**
  * Translates Accessibility Window Events into more usable event description.
@@ -705,14 +706,16 @@ public class WindowEventInterpreter implements WindowsDelegate, DisplayStateChan
     }
     return (interpretation.getOtherActiveWindow().getId() == WINDOW_ID_NONE)
         ? getWindowTransitionDelayMs()
-        : NONE_APPLICATION_WINDOW_DELAY_MS;
+        : ConfigVelocidade.janelaNaoAplicativoMs();
   }
 
   /** Returns the current window-transition delay in milliseconds. */
   private long getWindowTransitionDelayMs() {
-    long delayMs = WINDOW_CHANGE_DELAY_MS;
+    // Bro Blind Screen Reader: valores de ConfigVelocidade (originais WINDOW_CHANGE_DELAY_MS e
+    // WINDOW_CHANGE_DELAY_NO_ANIMATION_MS), ajustáveis no grupo Janelas da seção Velocidade.
+    long delayMs = ConfigVelocidade.trocaDeJanelaMs();
     if (reduceDelayPref && SettingsUtils.isAnimationDisabled(service)) {
-      delayMs = WINDOW_CHANGE_DELAY_NO_ANIMATION_MS;
+      delayMs = ConfigVelocidade.trocaDeJanelaSemAnimacaoMs();
     }
     return delayMs;
   }

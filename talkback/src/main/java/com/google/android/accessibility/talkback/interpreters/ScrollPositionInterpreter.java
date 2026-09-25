@@ -29,6 +29,7 @@ import com.google.android.accessibility.utils.input.ScrollEventInterpreter.Scrol
 import com.google.android.accessibility.utils.input.ScrollEventInterpreter.ScrollEventInterpretation;
 import com.google.android.accessibility.utils.output.ScrollActionRecord;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import com.vinicius.leitor.velocidade.ConfigVelocidade;
 
 /** Filters scroll-events, waiting for the last scroll-event within some wait-time. */
 public class ScrollPositionInterpreter implements ScrollEventHandler {
@@ -116,9 +117,11 @@ public class ScrollPositionInterpreter implements ScrollEventHandler {
     this.eventId = eventId;
     delayHandler.removeMessages();
     delayHandler.delay(
+        // Bro Blind Screen Reader: valores de ConfigVelocidade (padrões 350 e 700 ms; originais
+        // DELAY_PAGE_FEEDBACK e DELAY_SCROLL_FEEDBACK), ajustáveis na seção Velocidade.
         (Role.getSourceRole(event) == Role.ROLE_PAGER)
-            ? DELAY_PAGE_FEEDBACK
-            : DELAY_SCROLL_FEEDBACK,
+            ? ConfigVelocidade.posicaoPaginaMs()
+            : ConfigVelocidade.posicaoRolagemMs(),
         null);
   }
 

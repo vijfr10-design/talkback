@@ -25,14 +25,15 @@ import com.google.android.accessibility.talkback.Pipeline;
 import com.google.android.accessibility.talkback.R;
 import com.google.android.accessibility.utils.AccessibilityEventListener;
 import com.google.android.accessibility.utils.Performance.EventId;
+import com.vinicius.leitor.velocidade.ConfigVelocidade;
 
 /**
  * Produces continuous vibration feedback during framework gesture recognition. This class currently
  * is a mix of event-interpreter and feedback-mapper.
  */
 public class ProcessorGestureVibrator implements AccessibilityEventListener {
-  /** Delay after a gesture starts before feedback begins. */
-  private static final int FEEDBACK_DELAY = 70;
+  // Bro Blind Screen Reader: a espera antes do som e da vibração de gesto (original
+  // FEEDBACK_DELAY = 70 ms) vem de ConfigVelocidade.somInicioGestoMs().
 
   /** Event types that are handled by ProcessorGestureVibrator. */
   private static final int MASK_EVENTS_HANDLED_BY_PROCESSOR_GESTURE_VIBRATOR =
@@ -58,7 +59,7 @@ public class ProcessorGestureVibrator implements AccessibilityEventListener {
           feedbackReturner.returnFeedback(
               eventId,
               Feedback.interrupt(GESTURE_VIBRATION, /* level= */ 1)
-                  .setDelayMs(FEEDBACK_DELAY)
+                  .setDelayMs((int) ConfigVelocidade.somInicioGestoMs())
                   .vibration(R.array.gesture_detection_repeated_pattern)
                   .sound(R.raw.gesture_begin));
       case AccessibilityEventCompat.TYPE_GESTURE_DETECTION_END ->

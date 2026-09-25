@@ -20,7 +20,6 @@ import static android.view.accessibility.AccessibilityNodeInfo.FOCUS_ACCESSIBILI
 import static com.google.android.accessibility.talkback.Feedback.Focus.Action.INITIAL_FOCUS_FIRST_CONTENT;
 import static com.google.android.accessibility.talkback.Feedback.Focus.Action.INITIAL_FOCUS_FOLLOW_INPUT;
 import static com.google.android.accessibility.talkback.Feedback.Focus.Action.INITIAL_FOCUS_RESTORE;
-import static com.google.android.accessibility.utils.input.WindowEventInterpreter.WINDOW_CHANGE_DELAY_MS;
 
 import android.accessibilityservice.AccessibilityService;
 import android.os.SystemClock;
@@ -56,6 +55,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import com.vinicius.leitor.latencia.MedidorLatencia;
+import com.vinicius.leitor.velocidade.ConfigVelocidade;
+import com.vinicius.leitor.velocidade.AntecipacaoFoco;
 
 /** Helps FocusActor execute focus actions. */
 // TODO: Merge FocusActor with FocusManagerInternal.
@@ -225,7 +226,7 @@ public class FocusManagerInternal {
     ScreenState state = screenState.getStableScreenState();
     long windowEventInterpreterDelayTimeMs =
         SystemClock.uptimeMillis() - state.getScreenTransitionStartTime();
-    if (windowEventInterpreterDelayTimeMs <= WINDOW_CHANGE_DELAY_MS) {
+    if (windowEventInterpreterDelayTimeMs <= ConfigVelocidade.trocaDeJanelaMs()) {
       LogUtils.d(TAG, String.format("%s: Return, the initial focus is not stable yet.", subTag));
       return false;
     }
@@ -454,6 +455,10 @@ public class FocusManagerInternal {
       if (result) {
         MedidorLatencia.registrarFoco();
       }
+    }
+    if (result) {
+      // Bro Blind Screen Reader: som de foco e vibração no instante em que o foco muda.
+      AntecipacaoFoco.aoAplicarFoco(pipeline, node, focusActionInfo, eventId);
     }
     if (result) {
       focusActionInfo = updateFocusActionInfoIfNecessary(focusActionInfo, node);

@@ -126,6 +126,10 @@ public final class AccessibilityFocusActionHistory {
    * result from the action.
    */
   @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+  // Bro Blind Screen Reader: mantido em 300 ms de propósito. Não é uma espera: é o tempo máximo
+  // entre o leitor pedir o foco e o evento de foco chegar para o leitor reconhecer que o foco foi
+  // dele. Diminuir não acelera nada e faria o leitor tratar o próprio foco como vindo do app
+  // (fala duplicada ou fora de ordem). O mesmo vale para os valores de web e TV abaixo.
   static final int TIMEOUT_TOLERANCE_MS = 300;
 
   /**

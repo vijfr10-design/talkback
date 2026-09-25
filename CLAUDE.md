@@ -93,3 +93,30 @@
 - Fala "Foco X, fala Y milissegundos" (fila, sem histórico) e registra as fases no
   log com a tag `BBSR-Latencia`. Preferência `pref_bbsr_medidor_latencia` (padrão
   desligado), controlada por `ControleMedidor` (módulo talkback).
+
+### Etapa 2: velocidade de gesto e foco
+- `utils/.../com/vinicius/leitor/velocidade/ConfigVelocidade.java`: todos os atrasos do
+  caminho gesto → foco → som → fala, com valor original, novo padrão (reduzido só quando
+  seguro) e mínimo seguro, e comentário do motivo. Grupos: toque, eventos (cliques),
+  conteúdo e rolagem, dicas, som de gesto, janelas. Níveis por grupo: original, padrão,
+  rápido, mínimo. Modo turbo = mínimo em tudo + cache + som imediato.
+- Mantidos no original de propósito (são janelas de filtro contra fala duplicada, não
+  esperas): DELAY_AUTO_AFTER_STATE, DELAY_SELECTED_AFTER_FOCUS, TIMEOUT_TOLERANCE_MS
+  (e web/TV), filtros de TextEventFilter.
+- `CacheTravessia` (utils): guarda a OrderedTraversalStrategy (árvore + cache de nós que
+  falam) por raiz de janela; invalidado no início de `TalkBackService.onAccessibilityEvent`
+  por qualquer evento que possa mudar a estrutura; pré-calcula em uma HandlerThread depois
+  de foco ou mudança de tela; prefetch de descendentes no Android 13+. Entra por
+  `TraversalStrategyUtils.getTraversalStrategy`. Desligado por padrão (experimental).
+- `AntecipacaoFoco` (talkback): ao aplicar o foco por navegação ou toque, interrompe a
+  fala anterior e toca som + vibração na hora; o compositor
+  (`EventTypeViewAccessibilityFocusedFeedbackRule`) não repete o som. Ligado por padrão.
+- Fala enxuta: `GlobalVariables.getSpeakRoles/getUsageHintEnabled` e
+  `TreeNodesDescription` (selecionado/não selecionado/somente leitura) consultam
+  `ConfigVelocidade`.
+- Velocidade de fala extra: multiplicador em `FailoverTextToSpeech` sobre a velocidade do
+  sistema (até 4x).
+- Telas: `VelocidadeFragment` (res/xml/bbsr_velocidade_preferences.xml) e
+  `FalaEnxutaFragment` (bbsr_fala_enxuta_preferences.xml), na categoria "Personalização do
+  Bro Blind" da tela principal. Chaves `bbsr_*` definidas em `ConfigVelocidade`.
+  `ControleVelocidade` carrega e observa as preferências no serviço.

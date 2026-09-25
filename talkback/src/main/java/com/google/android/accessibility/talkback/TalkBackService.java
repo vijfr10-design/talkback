@@ -278,6 +278,8 @@ import com.google.android.libraries.accessibility.utils.log.LogUtils;
 import com.vinicius.leitor.atualizacao.VerificadorAtualizacao;
 import com.vinicius.leitor.latencia.ControleMedidor;
 import com.vinicius.leitor.latencia.MedidorLatencia;
+import com.vinicius.leitor.velocidade.CacheTravessia;
+import com.vinicius.leitor.velocidade.ControleVelocidade;
 import com.google.android.libraries.accessibility.utils.servicecompat.AccessibilityServiceCompat;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -596,6 +598,7 @@ public class TalkBackService extends AccessibilityServiceCompat
   private Pipeline pipeline;
   private @Nullable VerificadorAtualizacao verificadorAtualizacao;
   private @Nullable ControleMedidor controleMedidor;
+  private @Nullable ControleVelocidade controleVelocidade;
 
   /** Controller for audio and haptic feedback. */
   private FeedbackController feedbackController;
@@ -864,6 +867,10 @@ public class TalkBackService extends AccessibilityServiceCompat
       controleMedidor.parar();
       controleMedidor = null;
     }
+    if (controleVelocidade != null) {
+      controleVelocidade.parar();
+      controleVelocidade = null;
+    }
     interruptAllFeedback(/* stopTtsSpeechCompletely= */ false);
     storeTalkBackUserUsage();
     if (pipeline != null) {
@@ -1022,6 +1029,9 @@ public class TalkBackService extends AccessibilityServiceCompat
 
   @Override
   public void onAccessibilityEvent(AccessibilityEvent event) {
+    // Bro Blind Screen Reader: invalida a árvore de travessia guardada antes de qualquer
+    // processamento, se o evento puder ter mudado a tela.
+    CacheTravessia.aoReceberEvento(event);
     Performance perf = Performance.getInstance();
     EventId eventId = perf.onEventReceived(event);
     int eventType = event.getEventType();
@@ -1627,6 +1637,10 @@ public class TalkBackService extends AccessibilityServiceCompat
     // Bro Blind Screen Reader: medidor de latência (desligado por padrão).
     controleMedidor = new ControleMedidor(this, pipeline.getFeedbackReturner());
     controleMedidor.iniciar();
+
+    // Bro Blind Screen Reader: seção Velocidade (atrasos, cache de travessia, som imediato).
+    controleVelocidade = new ControleVelocidade(this);
+    controleVelocidade.iniciar();
 
     // If the locked-boot-completed intent was fired before onServiceConnected, we queued it,
     // so now we need to run it.

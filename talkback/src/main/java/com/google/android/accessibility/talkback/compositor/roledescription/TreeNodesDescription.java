@@ -39,6 +39,7 @@ import com.google.android.accessibility.utils.traversal.ReorderedChildrenIterato
 import com.google.android.libraries.accessibility.utils.log.LogUtils;
 import java.util.ArrayList;
 import java.util.List;
+import com.vinicius.leitor.velocidade.ConfigVelocidade;
 
 /**
  * Provides tree nodes description.
@@ -107,10 +108,16 @@ public class TreeNodesDescription {
     CharSequence treeDescription = treeDescriptionWithLabel(node, event, shouldIterateChildren);
     CharSequence disabledState = AccessibilityNodeFeedbackUtils.getDisabledStateText(node, context);
     CharSequence readOnlyState = AccessibilityNodeFeedbackUtils.getReadOnlyStateText(node, context);
-    CharSequence disabledStateOrReadOnlyState =
-        !TextUtils.isEmpty(disabledState) ? disabledState : readOnlyState;
     CharSequence selectedState =
         AccessibilityNodeFeedbackUtils.getSelectedStateText(node, context, globalVariables);
+    if (ConfigVelocidade.omitirEstadosObvios()) {
+      // Bro Blind Screen Reader, Fala enxuta: omite "somente leitura", "selecionado" e "não
+      // selecionado" na descrição do elemento focado. "Desativado" continua sendo falado.
+      readOnlyState = "";
+      selectedState = "";
+    }
+    CharSequence disabledStateOrReadOnlyState =
+        !TextUtils.isEmpty(disabledState) ? disabledState : readOnlyState;
 
     LogUtils.v(
         TAG,

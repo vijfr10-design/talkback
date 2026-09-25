@@ -62,6 +62,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import org.checkerframework.checker.initialization.qual.UnderInitialization;
+import com.vinicius.leitor.velocidade.ConfigVelocidade;
 
 /** Runs a collection of AccessibilityEventListeners on each event. */
 public class AccessibilityEventProcessor implements DisplayStateChangedListener {
@@ -99,6 +100,9 @@ public class AccessibilityEventProcessor implements DisplayStateChangedListener 
    * The minimum delay between window state change and automatic events. Note that this delay
    * doesn't affect response to user actions, so it is OK if it is a tad long.
    */
+  // Bro Blind Screen Reader: mantido em 200 ms de propósito. Não é uma espera, é uma janela de
+  // filtro que descarta eventos automáticos repetidos logo depois da troca de tela; diminuir
+  // não acelera nada e faria o leitor falar coisas duplicadas.
   public static final long DELAY_AUTO_AFTER_STATE = 200;
 
   /**
@@ -106,6 +110,8 @@ public class AccessibilityEventProcessor implements DisplayStateChangedListener 
    * of the accessibility node tree. Note that this delay doesn't affect response to user actions,
    * so it is OK if it is a tad long.
    */
+  // Bro Blind Screen Reader: mantido em 200 ms de propósito. É uma janela de filtro que
+  // descarta o evento "selecionado" falso que chega junto com o foco; não atrasa a fala.
   public static final long DELAY_SELECTED_AFTER_FOCUS = 200;
 
   /**
@@ -114,6 +120,8 @@ public class AccessibilityEventProcessor implements DisplayStateChangedListener 
    * has determined that the minimum delay is ~150ms, but a 150ms delay should be barely
    * perceptible. The 150ms delay has been tested on a variety of Nexus/non-Nexus devices.
    */
+  // Bro Blind Screen Reader: o valor usado agora vem de ConfigVelocidade.processamentoCliqueMs()
+  // (padrão 150 ms, mínimo 60 ms), ajustável na seção Velocidade.
   public static final long EVENT_PROCESSING_DELAY = 150;
 
   static final String CLASS_DIALER = "com.android.incallui.InCallActivity";
@@ -659,7 +667,7 @@ public class AccessibilityEventProcessor implements DisplayStateChangedListener 
       EventIdAnd<AccessibilityEvent> eventAndId =
           new EventIdAnd<AccessibilityEvent>(eventCopy, eventId);
       Message msg = obtainMessage(MESSAGE_WHAT_PROCESS_EVENT, eventAndId);
-      sendMessageDelayed(msg, EVENT_PROCESSING_DELAY);
+      sendMessageDelayed(msg, ConfigVelocidade.processamentoCliqueMs());
     }
 
     public void refreshIdleMessage() {

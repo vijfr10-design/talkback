@@ -58,6 +58,8 @@ public class ProcessorAccessibilityHints {
   private static final String LOG_TAG = "ProcessorAccessibilityHints";
 
   /** Timeout before reading a hint. */
+  // Bro Blind Screen Reader: valor original. O valor usado pelo Pipeline agora vem de
+  // ConfigVelocidade.dicaMs() (padrão 250 ms, mínimo 50 ms), ajustável na seção Velocidade.
   public static final long DELAY_HINT = 400; // ms
 
   ///////////////////////////////////////////////////////////////////////////////////////

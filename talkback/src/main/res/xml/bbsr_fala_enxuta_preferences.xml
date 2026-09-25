@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bro Blind Screen Reader: Fala enxuta. -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <com.google.android.accessibility.material.preference.AccessibilitySuiteSwitchPreference
+      android:defaultValue="false"
+      android:key="bbsr_fala_enxuta"
+      android:summary="Fala menos palavras em cada elemento. Escolha abaixo o que omitir."
+      android:title="Fala enxuta" />
+  <com.google.android.accessibility.material.preference.AccessibilitySuiteSwitchPreference
+      android:defaultValue="true"
+      android:dependency="bbsr_fala_enxuta"
+      android:key="bbsr_omitir_tipo"
+      android:summary="Não fala botão, caixa de seleção, imagem e outros tipos. Campos de texto continuam sendo anunciados."
+      android:title="Omitir o tipo do elemento" />
+  <com.google.android.accessibility.material.preference.AccessibilitySuiteSwitchPreference
+      android:defaultValue="true"
+      android:dependency="bbsr_fala_enxuta"
+      android:key="bbsr_omitir_estados"
+      android:summary="Não fala selecionado, não selecionado e somente leitura ao navegar. Marcado, desmarcado e desativado continuam."
+      android:title="Omitir estados óbvios" />
+  <com.google.android.accessibility.material.preference.AccessibilitySuiteSwitchPreference
+      android:defaultValue="true"
+      android:dependency="bbsr_fala_enxuta"
+      android:key="bbsr_omitir_dicas"
+      android:summary="Não fala dicas como toque duas vezes para ativar."
+      android:title="Omitir as dicas de uso" />
+</PreferenceScreen>

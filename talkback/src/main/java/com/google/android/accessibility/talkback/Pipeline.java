@@ -17,7 +17,6 @@
 package com.google.android.accessibility.talkback;
 
 import static com.google.android.accessibility.talkback.Feedback.InterruptGroup;
-import static com.google.android.accessibility.talkback.eventprocessor.ProcessorAccessibilityHints.DELAY_HINT;
 import static com.google.android.accessibility.utils.Performance.EVENT_ID_UNTRACKED;
 
 import android.content.Context;
@@ -50,6 +49,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import com.vinicius.leitor.velocidade.ConfigVelocidade;
 
 /** Pipeline stages wrapper. See REFERTO */
 public class Pipeline implements AccessibilityEventListener, AccessibilityEventIdleListener {
@@ -380,7 +380,7 @@ public class Pipeline implements AccessibilityEventListener, AccessibilityEventI
                       Feedback.create(
                           EVENT_ID_UNTRACKED,
                           Feedback.Part.builder()
-                              .setDelayMs((int) DELAY_HINT)
+                              .setDelayMs((int) ConfigVelocidade.dicaMs())
                               .setInterruptGroup(hintInterruptGroup)
                               .setInterruptLevel(hintInterruptLevel)
                               .setSenderName(LOG)

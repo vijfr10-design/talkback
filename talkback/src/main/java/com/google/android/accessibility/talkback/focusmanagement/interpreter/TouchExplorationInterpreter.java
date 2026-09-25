@@ -32,6 +32,7 @@ import com.google.android.accessibility.utils.monitor.InputModeTracker;
 import com.google.android.libraries.accessibility.utils.log.LogUtils;
 import java.util.ArrayList;
 import java.util.List;
+import com.vinicius.leitor.velocidade.ConfigVelocidade;
 
 /**
  * Interprets {@link AccessibilityEvent} for touch exploration actions.
@@ -207,8 +208,8 @@ public class TouchExplorationInterpreter implements AccessibilityEventListener {
    */
   private static final class PostDelayHandler
       extends WeakReferenceHandler<TouchExplorationInterpreter> {
-    private static final int EMPTY_TOUCH_AREA_DELAY_MS = 100;
-    private static final int TOUCH_END_DELAY_MS = 70;
+    // Bro Blind Screen Reader: os valores (originais 100 e 70 ms) agora vêm de
+    // ConfigVelocidade.toqueAreaVaziaMs() e fimDoToqueMs(), ajustáveis na seção Velocidade.
 
     private static final int MSG_EMPTY_TOUCH_ACTION = 0;
     private static final int MSG_TOUCH_END_ACTION = 1;
@@ -237,7 +238,8 @@ public class TouchExplorationInterpreter implements AccessibilityEventListener {
     }
 
     void postDelayEmptyTouchAction(EventId eventId) {
-      sendMessageDelayed(obtainMessage(MSG_EMPTY_TOUCH_ACTION, eventId), EMPTY_TOUCH_AREA_DELAY_MS);
+      sendMessageDelayed(
+          obtainMessage(MSG_EMPTY_TOUCH_ACTION, eventId), ConfigVelocidade.toqueAreaVaziaMs());
     }
 
     void cancelPendingEmptyTouchAction(boolean dispatchPendingActionImmediately) {
@@ -259,7 +261,7 @@ public class TouchExplorationInterpreter implements AccessibilityEventListener {
 
     void postDelayTouchEndAction(EventId eventId) {
       touchEndEventId = eventId;
-      sendMessageDelayed(obtainMessage(MSG_TOUCH_END_ACTION), TOUCH_END_DELAY_MS);
+      sendMessageDelayed(obtainMessage(MSG_TOUCH_END_ACTION), ConfigVelocidade.fimDoToqueMs());
     }
 
     void executePendingTouchEndAction() {

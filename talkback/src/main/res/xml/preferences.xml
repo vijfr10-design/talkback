@@ -131,12 +131,17 @@
   </com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory>
   <com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory
       android:key="@string/pref_category_bbsr_velocidade_key"
-      android:title="@string/title_pref_category_bbsr_velocidade">
-    <com.google.android.accessibility.material.preference.AccessibilitySuiteSwitchPreference
-        android:defaultValue="false"
-        android:key="@string/pref_bbsr_medidor_latencia_key"
-        android:summary="@string/summary_pref_bbsr_medidor_latencia"
-        android:title="@string/title_pref_bbsr_medidor_latencia" />
+      android:title="@string/title_pref_category_bbsr_personalizacao">
+    <com.google.android.accessibility.material.preference.AccessibilitySuitePreference
+        android:fragment="com.vinicius.leitor.configuracoes.VelocidadeFragment"
+        android:key="@string/pref_bbsr_velocidade_key"
+        android:summary="@string/summary_pref_bbsr_velocidade"
+        android:title="@string/title_pref_category_bbsr_velocidade" />
+    <com.google.android.accessibility.material.preference.AccessibilitySuitePreference
+        android:fragment="com.vinicius.leitor.configuracoes.FalaEnxutaFragment"
+        android:key="@string/pref_bbsr_fala_enxuta_tela_key"
+        android:summary="@string/summary_pref_bbsr_fala_enxuta"
+        android:title="@string/title_pref_bbsr_fala_enxuta" />
   </com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory>
   <com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory
       android:key="@string/pref_category_leitor_atualizacao_key"

@@ -37,6 +37,7 @@ import com.google.android.accessibility.utils.monitor.DisplayMonitor;
 import com.google.android.accessibility.utils.monitor.DisplayMonitor.DisplayStateChangedListener;
 import com.google.android.accessibility.utils.output.ScrollActionRecord;
 import com.google.android.libraries.accessibility.utils.log.LogUtils;
+import com.vinicius.leitor.velocidade.ConfigVelocidade;
 
 /** Interprets subtree-change event, and sends interpretations to the pipeline. */
 public class SubtreeChangeEventInterpreter
@@ -61,7 +62,15 @@ public class SubtreeChangeEventInterpreter
    */
   static final int LONG_SUBTREE_CHANGED_DELAY_MS = 350;
 
-  private int subtreeChangedDelayMs = SHORT_SUBTREE_CHANGED_DELAY_MS;
+  // Bro Blind Screen Reader: o valor efetivo vem de ConfigVelocidade.subarvoreCurtaMs() e
+  // subarvoreLongaMs() (padrões 120 e 350 ms), ajustáveis na seção Velocidade.
+  private boolean usarAtrasoLongo = false;
+
+  private long atrasoSubarvoreMs() {
+    return usarAtrasoLongo
+        ? ConfigVelocidade.subarvoreLongaMs()
+        : ConfigVelocidade.subarvoreCurtaMs();
+  }
 
   private final SubtreeChangedHandler subtreeChangedHandler;
   private final ScreenStateMonitor.State screenState;
@@ -139,7 +148,7 @@ public class SubtreeChangeEventInterpreter
     Message msg =
         subtreeChangedHandler.obtainMessage(
             SubtreeChangedHandler.MSG_CHECK_ACCESSIBILITY_FOCUS, eventId);
-    subtreeChangedHandler.sendMessageDelayed(msg, subtreeChangedDelayMs);
+    subtreeChangedHandler.sendMessageDelayed(msg, atrasoSubarvoreMs());
   }
 
   /**
@@ -152,13 +161,13 @@ public class SubtreeChangeEventInterpreter
     if (TalkbackFeatureSupport.supportMultipleAutoScroll()
         && scrollActorState.get() != null
         && (event.getEventType() & AccessibilityEvent.TYPE_VIEW_SCROLLED) != 0) {
-      subtreeChangedDelayMs = LONG_SUBTREE_CHANGED_DELAY_MS;
+      usarAtrasoLongo = true;
     }
   }
 
   /** Resets message delayed time to the default {@link #SHORT_SUBTREE_CHANGED_DELAY_MS}. */
   private void resetSubtreeChangedDelayMs() {
-    subtreeChangedDelayMs = SHORT_SUBTREE_CHANGED_DELAY_MS;
+    usarAtrasoLongo = false;
   }
 
   @Override
@@ -190,7 +199,7 @@ public class SubtreeChangeEventInterpreter
 
         if (shouldKeepDelayMessage(parent.scrollActorState.get())) {
           LogUtils.i(TAG, "Keep delaying because we have a new auto scroll action.");
-          sendEmptyMessageDelayed(MSG_CHECK_ACCESSIBILITY_FOCUS, parent.subtreeChangedDelayMs);
+          sendEmptyMessageDelayed(MSG_CHECK_ACCESSIBILITY_FOCUS, parent.atrasoSubarvoreMs());
           return;
         }
 

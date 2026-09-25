@@ -87,6 +87,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import com.vinicius.leitor.latencia.MedidorLatencia;
+import com.vinicius.leitor.velocidade.ConfigVelocidade;
 
 /**
  * Wrapper for {@link TextToSpeech} that handles fail-over when a specific engine does not work.
@@ -654,7 +655,9 @@ public class FailoverTextToSpeech {
         && customFlags.get(RATE_PARAMETER_TYPE) == ABSOLUTE) {
       effectiveRate = rate;
     } else {
-      effectiveRate = rate * defaultRate;
+      // Bro Blind Screen Reader: multiplicador da seção Velocidade, para falar acima do máximo
+      // da velocidade de fala do sistema.
+      effectiveRate = rate * defaultRate * ConfigVelocidade.multiplicadorFala();
     }
 
     synchronized (ttsLock) {
@@ -1065,7 +1068,7 @@ public class FailoverTextToSpeech {
     }
 
     Bundle bundle = new Bundle();
-    float effectiveRate = rate * defaultRate;
+    float effectiveRate = rate * defaultRate * ConfigVelocidade.multiplicadorFala();
     float effectivePitch = pitch * defaultPitch;
     bundle.putInt(FailoverTextToSpeech.SpeechParam.PITCH, (int) (effectivePitch * 100));
     bundle.putInt(FailoverTextToSpeech.SpeechParam.RATE, (int) (effectiveRate * 100));

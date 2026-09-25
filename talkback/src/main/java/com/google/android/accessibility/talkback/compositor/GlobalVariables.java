@@ -59,6 +59,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import com.vinicius.leitor.velocidade.ConfigVelocidade;
 
 /** Tracks the current global state for the parse tree. */
 public class GlobalVariables extends TimedFlags implements ParseTree.VariableDelegate {
@@ -381,7 +382,8 @@ public class GlobalVariables extends TimedFlags implements ParseTree.VariableDel
 
   /** Returns if TalkBack usage hint is enabled. */
   public boolean getUsageHintEnabled() {
-    return usageHintEnabled;
+    // Bro Blind Screen Reader, Fala enxuta: pode omitir as dicas de uso.
+    return usageHintEnabled && !ConfigVelocidade.omitirDicas();
   }
 
   /** Sets if TalkBack usage hint is enabled. */
@@ -512,7 +514,8 @@ public class GlobalVariables extends TimedFlags implements ParseTree.VariableDel
   }
 
   public boolean getSpeakRoles() {
-    return speakRoles;
+    // Bro Blind Screen Reader, Fala enxuta: pode omitir o tipo do elemento.
+    return speakRoles && !ConfigVelocidade.omitirTipo();
   }
 
   public void setSpeakRoles(boolean value) {

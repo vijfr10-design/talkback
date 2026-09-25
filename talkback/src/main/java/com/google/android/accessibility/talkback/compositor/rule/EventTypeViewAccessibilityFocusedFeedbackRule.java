@@ -59,6 +59,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+import com.vinicius.leitor.velocidade.AntecipacaoFoco;
 
 /**
  * Event feedback rules for {@link EVENT_TYPE_VIEW_ACCESSIBILITY_FOCUSED} event. These rules will
@@ -147,6 +148,10 @@ public final class EventTypeViewAccessibilityFocusedFeedbackRule {
             .append(String.format(", isDeviceScreenNoTouch=%s", isDeviceScreenNoTouch))
             .toString());
 
+    // Bro Blind Screen Reader: se o som e a vibração de foco já tocaram no instante do foco
+    // (AntecipacaoFoco), não tocam de novo junto com a fala.
+    boolean somJaTocado = AntecipacaoFoco.consumir(srcNode);
+
     return EventFeedback.builder()
         .setTtsOutput(Optional.of(ttsOutput))
         .setQueueMode(queueMode(isInitialFocus, isDeviceScreenNoTouch))
@@ -160,8 +165,8 @@ public final class EventTypeViewAccessibilityFocusedFeedbackRule {
         .setForceFeedbackEvenIfSsbActive(
             forceFeedbackEvenIfSsbActive(accessibilityFocusEventInterpretation, isInitialFocus))
         .setPreventDeviceSleep(true)
-        .setEarcon(earcon(srcNode, globalVariables))
-        .setHaptic(haptic(srcNode))
+        .setEarcon(somJaTocado ? earconExtra(srcNode, globalVariables) : earcon(srcNode, globalVariables))
+        .setHaptic(somJaTocado ? -1 : haptic(srcNode))
         .setInlineFormatting(
             supportInlineFormatting(srcNode, accessibilityFocusEventInterpretation))
         .build();
@@ -408,6 +413,15 @@ public final class EventTypeViewAccessibilityFocusedFeedbackRule {
           ? R.raw.focus_actionable
           : R.raw.focus;
     }
+  }
+
+  /**
+   * Sons especiais que não são o som de foco comum (entrar/sair de lista rolável, divisor de
+   * tela). Continuam tocando junto com a fala quando o som de foco já foi antecipado.
+   */
+  private static int earconExtra(AccessibilityNodeInfoCompat node, GlobalVariables globalVariables) {
+    int som = earcon(node, globalVariables);
+    return (som == R.raw.focus || som == R.raw.focus_actionable) ? -1 : som;
   }
 
   private static int haptic(AccessibilityNodeInfoCompat node) {

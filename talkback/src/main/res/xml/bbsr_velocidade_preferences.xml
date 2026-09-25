@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bro Blind Screen Reader: seção Velocidade. -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory
+      android:key="bbsr_categoria_otimizacoes"
+      android:title="Otimizações">
+    <com.google.android.accessibility.material.preference.AccessibilitySuiteSwitchPreference
+        android:defaultValue="false"
+        android:key="bbsr_modo_turbo"
+        android:summary="Aplica todos os atrasos no mínimo e liga o cache da ordem de travessia e o som imediato no foco. Pode causar falas fora de hora em alguns aplicativos."
+        android:title="Modo turbo" />
+    <com.google.android.accessibility.material.preference.AccessibilitySuiteSwitchPreference
+        android:defaultValue="true"
+        android:key="bbsr_som_imediato"
+        android:summary="O som de foco e a vibração saem no instante em que o foco muda, antes de a fala ser montada, e a fala anterior é interrompida na hora."
+        android:title="Som e vibração imediatos no foco" />
+    <com.google.android.accessibility.material.preference.AccessibilitySuiteSwitchPreference
+        android:defaultValue="false"
+        android:key="bbsr_cache_travessia"
+        android:summary="Experimental. Guarda a ordem dos elementos da tela e só calcula de novo quando a tela muda, e prepara a próxima navegação em segundo plano. Deixa o deslizar para o próximo elemento mais rápido."
+        android:title="Cache da ordem de travessia" />
+    <com.google.android.accessibility.material.preference.AccessibilitySuiteListPreference
+        android:defaultValue="1.0"
+        android:dialogTitle="Velocidade de fala extra"
+        android:entries="@array/bbsr_multiplicador_fala_nomes"
+        android:entryValues="@array/bbsr_multiplicador_fala_valores"
+        android:key="bbsr_multiplicador_fala"
+        android:summary="%s"
+        android:title="Velocidade de fala extra" />
+  </com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory>
+
+  <com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory
+      android:key="bbsr_categoria_atrasos"
+      android:title="Atrasos">
+    <com.google.android.accessibility.material.preference.AccessibilitySuiteListPreference
+        android:defaultValue="1"
+        android:dialogTitle="Exploração por toque"
+        android:entries="@array/bbsr_niveis_nomes"
+        android:entryValues="@array/bbsr_niveis_valores"
+        android:key="bbsr_nivel_toque"
+        android:summary="%s. Espera ao levantar o dedo e antes de avisar área vazia."
+        android:title="Exploração por toque" />
+    <com.google.android.accessibility.material.preference.AccessibilitySuiteListPreference
+        android:defaultValue="1"
+        android:dialogTitle="Resposta a cliques"
+        android:entries="@array/bbsr_niveis_nomes"
+        android:entryValues="@array/bbsr_niveis_valores"
+        android:key="bbsr_nivel_eventos"
+        android:summary="%s. Espera antes de falar o novo estado depois de ativar um elemento."
+        android:title="Resposta a cliques" />
+    <com.google.android.accessibility.material.preference.AccessibilitySuiteListPreference
+        android:defaultValue="1"
+        android:dialogTitle="Mudanças de conteúdo e rolagem"
+        android:entries="@array/bbsr_niveis_nomes"
+        android:entryValues="@array/bbsr_niveis_valores"
+        android:key="bbsr_nivel_conteudo"
+        android:summary="%s. Espera a tela estabilizar e antes de falar a posição da rolagem."
+        android:title="Mudanças de conteúdo e rolagem" />
+    <com.google.android.accessibility.material.preference.AccessibilitySuiteListPreference
+        android:defaultValue="1"
+        android:dialogTitle="Dicas de uso"
+        android:entries="@array/bbsr_niveis_nomes"
+        android:entryValues="@array/bbsr_niveis_valores"
+        android:key="bbsr_nivel_dicas"
+        android:summary="%s. Silêncio antes da dica, como toque duas vezes para ativar."
+        android:title="Dicas de uso" />
+    <com.google.android.accessibility.material.preference.AccessibilitySuiteListPreference
+        android:defaultValue="1"
+        android:dialogTitle="Som de gesto em andamento"
+        android:entries="@array/bbsr_niveis_nomes"
+        android:entryValues="@array/bbsr_niveis_valores"
+        android:key="bbsr_nivel_sons_gesto"
+        android:summary="%s. Espera antes do som e da vibração enquanto o gesto é desenhado."
+        android:title="Som de gesto em andamento" />
+    <com.google.android.accessibility.material.preference.AccessibilitySuiteListPreference
+        android:defaultValue="1"
+        android:dialogTitle="Troca de tela"
+        android:entries="@array/bbsr_niveis_nomes"
+        android:entryValues="@array/bbsr_niveis_valores"
+        android:key="bbsr_nivel_janelas"
+        android:summary="%s. Espera a animação de abrir uma tela nova antes de anunciá-la."
+        android:title="Troca de tela" />
+  </com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory>
+
+  <com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory
+      android:key="bbsr_categoria_medicao"
+      android:title="Medição">
+    <com.google.android.accessibility.material.preference.AccessibilitySuiteSwitchPreference
+        android:defaultValue="false"
+        android:key="@string/pref_bbsr_medidor_latencia_key"
+        android:summary="@string/summary_pref_bbsr_medidor_latencia"
+        android:title="@string/title_pref_bbsr_medidor_latencia" />
+    <com.google.android.accessibility.material.preference.AccessibilitySuitePreference
+        android:key="bbsr_restaurar_padrao"
+        android:summary="Volta todas as opções desta tela aos valores padrão. Não mexe no medidor de latência."
+        android:title="Restaurar padrão" />
+  </com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory>
+</PreferenceScreen>

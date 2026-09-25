@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import com.vinicius.leitor.velocidade.CacheTravessia;
 
 public class TraversalStrategyUtils {
 
@@ -78,8 +79,9 @@ public class TraversalStrategyUtils {
       boolean makeFabFirst) {
     switch (direction) {
       case SEARCH_FOCUS_BACKWARD, SEARCH_FOCUS_FORWARD -> {
-        return new OrderedTraversalStrategy(
-            root, includeChildrenOfNodesWithWebActions, makeFabFirst);
+        // Bro Blind Screen Reader: reaproveita a árvore de travessia enquanto a tela não muda
+        // (desligado por padrão; ver CacheTravessia).
+        return CacheTravessia.obter(root, includeChildrenOfNodesWithWebActions, makeFabFirst);
       }
       case SEARCH_FOCUS_LEFT, SEARCH_FOCUS_RIGHT, SEARCH_FOCUS_UP, SEARCH_FOCUS_DOWN -> {
         return new DirectionalTraversalStrategy(root, focusFinder);
