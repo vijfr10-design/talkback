@@ -3,7 +3,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" xmlns:tools="http://schemas.android.com/tools">
 
     <!--The human-readable name of this service. Do not translate. -->
-    <string name="talkback_title" translatable="false">Leitor Vini</string>
+    <string name="talkback_title" translatable="false">Bro Blind Screen Reader</string>
 
     <!--
       Source: A brief description of TalkBack.
@@ -32,7 +32,7 @@
       Source: Title for the activity that manages TalkBack settings.
       Description: This is presented to the user when managing TalkBack settings. [CHAR_LIMIT=NONE]
     -->
-    <string name="talkback_preferences_title">Leitor Vini settings</string>
+    <string name="talkback_preferences_title">Bro Blind Screen Reader settings</string>
 
     <!--
       Source: Screen title of TalkBack settings shown as a breadcrumb like TalkBack > Settings

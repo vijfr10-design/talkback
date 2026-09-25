@@ -3,7 +3,7 @@
   <string name="talkback_service_description">នៅពេលបើក ​TalkBack វា​ផ្ដល់​ការអាន​អេក្រង់ ដើម្បី​ឱ្យ​អ្នក​អាច​ប្រើ​ឧបករណ៍​របស់អ្នក​ដោយមិន​ចាំបាច់​មើល​អេក្រង់។ កម្មវិធីនេះអាច​មាន​ប្រយោជន៍សម្រាប់ជនពិការ​ភ្នែក ឬអ្នក​ខ្សោយភ្នែក។\n\nដើម្បីរុករក​ដោយប្រើ​ TalkBack៖\n• អូស​ទៅ​ស្ដាំ ឬឆ្វេង ដើម្បី​ផ្លាស់ទី​រវាង​ធាតុ\n• ចុចពីរដង ដើម្បី​បើកដំណើរការ​ធាតុ\n• អូសម្រាមដៃ​ពីរ​ដើម្បី​រំកិល\n\nដើម្បី​បិទ TalkBack៖\n• ចុច​ប៊ូតុង​បិទបើក។ អ្នកនឹង​ឃើញ​ឆ្នូតមួយ។ ​ចុច​ប៊ូតុង​បិទ​បើក​ពីរដង។\n• នៅលើ​សារ​បញ្ជាក់ សូម​ចុច \"​យល់ព្រម\"។ បន្ទាប់មក ចុច \"​យល់ព្រម\" ​ពីរដង។</string>
   <string name="talkback_service_html_description">នៅពេលបើក TalkBack មុខងារនេះផ្ដល់ការអានអេក្រង់ ដើម្បីឱ្យអ្នកអាចប្រើឧបករណ៍របស់អ្នក ដោយមិនចាំបាច់មើលអេក្រង់។ TalkBack គឺសម្រាប់ប្រើនៅក្នុងស្ថានភាព ឬសម្រាប់មនុស្សដែលមានការពិបាកក្នុងការមើលអេក្រង់។&lt;br&gt;&lt;br&gt;&lt;b&gt;របៀបប្រើប្រាស់ TalkBack&lt;/b&gt;&lt;br&gt;• អូសទៅស្ដាំ ឬឆ្វេង ដើម្បីផ្លាស់ទីរវាងធាតុ&lt;br&gt;• ចុចពីរដង ដើម្បីបើកដំណើរការធាតុ&lt;br&gt;• អូសម្រាមដៃ 2 ដើម្បីរំកិល&lt;br&gt;&lt;b&gt;របៀបបិទ TalkBack&lt;/b&gt;&lt;br&gt;1. នៅក្នុងការកំណត់ សូមចុច &lt;b&gt;ប្រើ TalkBack&lt;/b&gt;។ នឹងមាន​គ្រោង​មួយ។ ចុចវាពីរដង។&lt;br&gt;2. នៅ​លើ​សារ​​បញ្ជាក់ សូម​ចុច &lt;b&gt;បញ្ឈប់&lt;/b&gt;។ នឹង​មាន​គ្រោង​មួយ​។ ចុចវាពីរដង។</string>
   <string name="talkback_service_summary">ប្រើកម្មវិធី​អាន​អេក្រង់ ដើម្បីស្ដាប់ឮធាតុដែលត្រូវបានអានឮៗ</string>
-  <string name="talkback_preferences_title">ការកំណត់ Leitor Vini</string>
+  <string name="talkback_preferences_title">ការកំណត់ Bro Blind Screen Reader</string>
   <string name="talkback_settings_screen_title_breadcrumb">ការកំណត់</string>
   <string name="tts_preferences_title">ការបំប្លែង​អត្ថបទ​ទៅជា​ការនិយាយ</string>
   <string name="language_options">ភាសា</string>

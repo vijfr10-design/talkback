@@ -1,8 +1,10 @@
-# CLAUDE.md — Leitor Vini
+# CLAUDE.md — Bro Blind Screen Reader
 
 ## Contexto
 - Fork do TalkBack do Google (Apache 2.0). Objetivo de longo prazo: leitor de tela
-  próprio para Android chamado **Leitor Vini**.
+  próprio para Android chamado **Bro Blind Screen Reader** (antes "Leitor Vini";
+  o nome antigo ainda aparece em nomes internos, como pacotes Java, keystore e
+  nome do arquivo APK, que foram mantidos de propósito).
 - O dono do projeto é cego, usa leitor de tela e não tem experiência com programação.
   Responda a ele em português, em texto corrido simples, sem tabelas, sem listas e
   sem formatação markdown (atrapalham o leitor de tela). Explique o que ele precisa
@@ -26,9 +28,9 @@
   `com.google.android.marvin.talkback.TalkBackService`) NÃO foram renomeados.
   Isso é intencional: nomes de classe não conflitam entre apps, e renomear
   quebraria referências (ex.: `settingsActivity` nos XML de accessibilityservice).
-- Nome visível: `@string/talkback_title` = "Leitor Vini" (rótulo do serviço de
-  acessibilidade e do app). `talkback_preferences_title` passou a citar
-  "Leitor Vini" em todos os idiomas. Outros textos da interface (tutoriais etc.)
+- Nome visível: `@string/talkback_title` = "Bro Blind Screen Reader" (rótulo do
+  serviço de acessibilidade e do app). `talkback_preferences_title` e os textos de
+  `leitor_vini.xml` citam "Bro Blind Screen Reader" em todos os idiomas. Outros textos da interface (tutoriais etc.)
   ainda mencionam "TalkBack"; trocar depois, se desejado.
 - Assinatura: keystore fixa em `keystore/leitor-vini.jks` (alias `leitorvini`,
   senhas `leitorvini`), guardada no repositório por ser projeto pessoal. Usada em
@@ -47,6 +49,12 @@
   https://github.com/vijfr10-design/talkback/releases/latest/download/LeitorVini.apk
 - Licença: LICENSE original mantido; `NOTICE` informa que é baseado no TalkBack.
   Não usar "TalkBack" nem marcas do Google no nome do app.
+
+## Renomeação para Bro Blind Screen Reader
+- Só o nome visível mudou. O `applicationId` continua `com.vinicius.leitor` e os
+  arquivos do Release continuam `LeitorVini*.apk`: mudar o identificador faria o
+  Android tratar como outro app (sem atualizar por cima), e mudar o nome do arquivo
+  quebraria o link fixo e o filtro `^LeitorVini\.apk$` configurado no Obtainium.
 
 ## Etapa 2: verificação de atualização no app
 - Código em `talkback/src/main/java/com/vinicius/leitor/atualizacao/`

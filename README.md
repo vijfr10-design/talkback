@@ -1,4 +1,4 @@
-# Leitor Vini
+# Bro Blind Screen Reader
 
 Leitor de tela pessoal para Android, baseado no TalkBack do Google
 (licença Apache 2.0, veja LICENSE e NOTICE). Não é afiliado ao Google.
@@ -17,4 +17,4 @@ Rode `ANDROID_SDK=/caminho/do/sdk ./build.sh` ou `gradle assemblePhoneRelease`.
 
 ## Ativar
 
-Instale o APK, abra Configurações > Acessibilidade > Leitor Vini e ative o serviço.
+Instale o APK, abra Configurações > Acessibilidade > Bro Blind Screen Reader e ative o serviço.

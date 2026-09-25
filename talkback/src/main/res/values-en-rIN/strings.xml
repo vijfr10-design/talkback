@@ -3,7 +3,7 @@
   <string name="talkback_service_description">When TalkBack is on, it provides spoken feedback so that you can use your device without looking at the screen. This can be helpful for people who are blind or have low vision.\n\nTo navigate using TalkBack:\n•  Swipe right or left to move between items\n•  Double-tap to activate an item\n•  Drag two fingers to scroll\n\nTo turn off TalkBack:\n•  Tap the switch. You’ll see an outline. Double-tap the switch.\n•  On the confirmation message, tap OK. Then double-tap OK.</string>
   <string name="talkback_service_html_description">When TalkBack is on, it provides spoken feedback so that you can use your device without looking at the screen. TalkBack is intended for situations or people who have difficulty seeing the screen.&lt;br&gt;&lt;br&gt;&lt;b&gt;How to use TalkBack&lt;/b&gt;&lt;br&gt;• Swipe right or left to move between items&lt;br&gt;• Double-tap to activate an item&lt;br&gt;• Drag 2 fingers to scroll&lt;br&gt;&lt;b&gt;How to turn off TalkBack&lt;/b&gt;&lt;br&gt;1. In Settings, tap &lt;b&gt;Use TalkBack&lt;/b&gt;. There will be an outline. Double-tap it.&lt;br&gt;2. On the confirmation message, tap &lt;b&gt;Stop&lt;/b&gt;. There will be an outline. Double-tap it.</string>
   <string name="talkback_service_summary">Use a screen reader to hear items spoken aloud</string>
-  <string name="talkback_preferences_title">Leitor Vini settings</string>
+  <string name="talkback_preferences_title">Bro Blind Screen Reader settings</string>
   <string name="talkback_settings_screen_title_breadcrumb">Settings</string>
   <string name="tts_preferences_title">Text to speech</string>
   <string name="language_options">Languages</string>

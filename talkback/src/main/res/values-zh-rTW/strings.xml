@@ -3,7 +3,7 @@
   <string name="talkback_service_description">開啟 TalkBack 後，當中的「互動朗讀」功能可讓您在使用裝置時不必看著螢幕。對視障和低視能人士而言，這項功能相當實用。\n\n如何使用 TalkBack 瀏覽畫面：\n• 向右或向左滑動即可在項目之間移動\n• 輕觸兩下即可開啟項目\n• 用兩指拖曳即可捲動畫面\n\n如何停用 TalkBack：\n• 輕觸切換鈕，按鈕會隨即顯示外框。接著輕觸兩下切換鈕。\n• 輕觸確認訊息上的「確定」，然後再輕觸兩下「確定」。</string>
   <string name="talkback_service_html_description">開啟 TalkBack 後，系統會提供互動朗讀內容，讓你不用看螢幕也能操作裝置。如果使用者無法正常查看或難以看清螢幕，就非常適合使用 TalkBack。&lt;br&gt;&lt;br&gt;&lt;b&gt;如何使用 TalkBack&lt;/b&gt;&lt;br&gt;• 向右或向左滑動可在項目之間移動&lt;br&gt;• 輕觸兩下可啟動項目&lt;br&gt;• 用 2 指拖曳可捲動畫面&lt;br&gt;&lt;b&gt;如何關閉 TalkBack&lt;/b&gt;&lt;br&gt;1. 在「設定」中輕觸「使用 TalkBack」&lt;b&gt;&lt;/b&gt;，畫面上會出現外框，這時請輕觸兩下。&lt;br&gt;2. 輕觸確認訊息上的「停止」&lt;b&gt;&lt;/b&gt;，畫面上會出現外框，這時請輕觸兩下。</string>
   <string name="talkback_service_summary">使用螢幕閱讀器朗讀內容</string>
-  <string name="talkback_preferences_title">Leitor Vini 設定</string>
+  <string name="talkback_preferences_title">Bro Blind Screen Reader 設定</string>
   <string name="talkback_settings_screen_title_breadcrumb">設定</string>
   <string name="tts_preferences_title">文字轉語音</string>
   <string name="language_options">語言</string>

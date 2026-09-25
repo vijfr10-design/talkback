@@ -3,7 +3,7 @@
   <string name="talkback_service_description">เมื่อเปิด TalkBack อุปกรณ์จะอธิบายและอ่านออกเสียงเพื่อให้คุณใช้อุปกรณ์ได้โดยไม่ต้องมองหน้าจอ ซึ่งเป็นประโยชน์ต่อผู้ที่ตาบอดหรือมีสายตาเลือนราง\n\nวิธีไปยังส่วนต่างๆ เมื่อใช้ TalkBack\n•  ปัดไปทางขวาหรือซ้ายเพื่อเลื่อนไปมาระหว่างรายการต่างๆ\n•  แตะสองครั้งเพื่อเปิดใช้งานรายการ\n•  ใช้ 2 นิ้วลากเพื่อเลื่อน\n\nวิธีปิด TalkBack\n•  แตะสวิตช์ แล้วคุณจะเห็นเส้นขอบ ให้แตะสองครั้งที่สวิตช์\n•  แตะ \"ตกลง\" ในข้อความยืนยัน จากนั้นแตะสองครั้งที่ \"ตกลง\"</string>
   <string name="talkback_service_html_description">TalkBack จะอธิบายและอ่านออกเสียงเมื่อเปิดอยู่ เพื่อให้คุณใช้อุปกรณ์ได้โดยไม่ต้องมองหน้าจอ TalkBack มีไว้สำหรับสถานการณ์หรือผู้ที่มองดูหน้าจอได้ลำบาก&lt;br&gt;&lt;br&gt;&lt;b&gt;วิธีใช้ TalkBack&lt;/b&gt;&lt;br&gt;• ปัดไปทางซ้ายหรือขวาเพื่อเลื่อนไปมาระหว่างรายการต่างๆ&lt;br&gt;• แตะสองครั้งเพื่อเปิดใช้งานรายการ&lt;br&gt;• ใช้ 2 นิ้วลากเพื่อเลื่อน&lt;br&gt;&lt;b&gt;วิธีปิด TalkBack&lt;/b&gt;&lt;br&gt;1. ในการตั้งค่า ให้แตะ&lt;b&gt;ใช้ TalkBack&lt;/b&gt; เส้นขอบจะปรากฏขึ้น แตะสองครั้ง&lt;br&gt;2. ในข้อความยืนยัน ให้แตะ&lt;b&gt;หยุด&lt;/b&gt; เส้นขอบจะปรากฏขึ้น แตะสองครั้ง</string>
   <string name="talkback_service_summary">ใช้โปรแกรมอ่านหน้าจอเพื่อฟังเสียงอ่านรายการต่างๆ</string>
-  <string name="talkback_preferences_title">การตั้งค่า Leitor Vini</string>
+  <string name="talkback_preferences_title">การตั้งค่า Bro Blind Screen Reader</string>
   <string name="talkback_settings_screen_title_breadcrumb">การตั้งค่า</string>
   <string name="tts_preferences_title">การอ่านออกเสียงข้อความ</string>
   <string name="language_options">ภาษา</string>

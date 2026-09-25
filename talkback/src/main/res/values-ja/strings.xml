@@ -3,7 +3,7 @@
   <string name="talkback_service_description">TalkBack が ON の場合は、画面を見ずにデバイスを使用できるよう音声フィードバックが提供されます。Talkback は、目の不自由な方や視力の弱い方におすすめの機能です。\n\nTalkBack の使い方:\n•  左右にスワイプして、項目間を移動します\n•  項目をダブルタップして、有効にします\n•  2 本の指でドラッグしてスクロールします\n\nTalkBack を OFF にする方法:\n•  このスイッチをタップして、枠線が表示されたら、このスイッチをダブルタップします。\n•  確認メッセージで [OK] をタップしてから、[OK] をダブルタップします。</string>
   <string name="talkback_service_html_description">TalkBack が ON の場合は、画面を見ずにデバイスを使用できるよう音声フィードバックが提供されます。TalkBack は、画面を見ることが難しい状況や目の不自由な方におすすめの機能です。&lt;br&gt;&lt;br&gt;&lt;b&gt;TalkBack の使い方&lt;/b&gt;&lt;br&gt;• 左右にスワイプして項目間を移動します&lt;br&gt;• ダブルタップで項目を有効にします&lt;br&gt;• 2 本の指でドラッグしてスクロールします&lt;br&gt;&lt;b&gt;TalkBack を OFF にする方法&lt;/b&gt;&lt;br&gt;1. 設定で [&lt;b&gt;TalkBack を使用&lt;/b&gt;] をタップします。枠線が表示されます。ダブルタップします。&lt;br&gt;2. 確認メッセージが表示されたら、[&lt;b&gt;停止&lt;/b&gt;] をタップします。枠線が表示されます。ダブルタップします。</string>
   <string name="talkback_service_summary">スクリーン リーダーを使用して、画面上の項目を読み上げます</string>
-  <string name="talkback_preferences_title">Leitor Vini の設定</string>
+  <string name="talkback_preferences_title">Bro Blind Screen Reader の設定</string>
   <string name="talkback_settings_screen_title_breadcrumb">設定</string>
   <string name="tts_preferences_title">テキスト読み上げ</string>
   <string name="language_options">言語</string>

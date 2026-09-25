@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
     <external-path name="external-root" path="/" />
-    <!-- APK baixado pela verificação de atualização do Leitor Vini. -->
+    <!-- APK baixado pela verificação de atualização do Bro Blind Screen Reader. -->
     <cache-path name="atualizacao" path="atualizacao/" />
 </paths>
