@@ -47,6 +47,10 @@ public final class ConfigVelocidade {
   public static final String CHAVE_OMITIR_TIPO = "bbsr_omitir_tipo";
   public static final String CHAVE_OMITIR_ESTADOS = "bbsr_omitir_estados";
   public static final String CHAVE_OMITIR_DICAS = "bbsr_omitir_dicas";
+  public static final String CHAVE_ESPERA_EXPLORACAO = "bbsr_espera_exploracao";
+
+  /** Espera usada pelo Modo turbo para começar a exploração por toque. */
+  private static final int ESPERA_EXPLORACAO_TURBO_MS = 70;
 
   // Grupos de atrasos.
   public static final int GRUPO_TOQUE = 0;
@@ -88,6 +92,7 @@ public final class ConfigVelocidade {
   private static volatile boolean omitirTipo = false;
   private static volatile boolean omitirEstados = false;
   private static volatile boolean omitirDicas = false;
+  private static volatile int esperaExploracao = 0;
 
   private ConfigVelocidade() {}
 
@@ -107,6 +112,10 @@ public final class ConfigVelocidade {
       // Mantém 1.0.
     }
     multiplicadorFala = Math.max(0.5f, Math.min(multiplicador, 4.0f));
+    esperaExploracao = lerInteiro(prefs, CHAVE_ESPERA_EXPLORACAO, 0);
+    if (turbo && (esperaExploracao == 0 || esperaExploracao > ESPERA_EXPLORACAO_TURBO_MS)) {
+      esperaExploracao = ESPERA_EXPLORACAO_TURBO_MS;
+    }
     boolean enxuta = prefs.getBoolean(CHAVE_FALA_ENXUTA, false);
     omitirTipo = enxuta && prefs.getBoolean(CHAVE_OMITIR_TIPO, true);
     omitirEstados = enxuta && prefs.getBoolean(CHAVE_OMITIR_ESTADOS, true);
@@ -124,6 +133,7 @@ public final class ConfigVelocidade {
         .remove(CHAVE_CACHE_TRAVESSIA)
         .remove(CHAVE_SOM_IMEDIATO)
         .remove(CHAVE_MULTIPLICADOR_FALA)
+        .remove(CHAVE_ESPERA_EXPLORACAO)
         .apply();
   }
 
@@ -137,6 +147,7 @@ public final class ConfigVelocidade {
         || chave.equals(CHAVE_CACHE_TRAVESSIA)
         || chave.equals(CHAVE_SOM_IMEDIATO)
         || chave.equals(CHAVE_MULTIPLICADOR_FALA)
+        || chave.equals(CHAVE_ESPERA_EXPLORACAO)
         || chave.equals(CHAVE_FALA_ENXUTA)
         || chave.equals(CHAVE_OMITIR_TIPO)
         || chave.equals(CHAVE_OMITIR_ESTADOS)
@@ -295,6 +306,21 @@ public final class ConfigVelocidade {
    */
   public static long janelaNaoAplicativoMs() {
     return atraso(GRUPO_JANELAS, 150, 150, 80);
+  }
+
+  /**
+   * Espera entre o dedo encostar na tela e a exploração por toque começar, quando o próprio
+   * leitor reconhece os gestos (TouchInteractionMonitor, Android 13+). No TalkBack essa espera é
+   * de 250 ms (tempo do toque duplo do Android menos 50 ms) e existe para decidir se o toque é o
+   * começo de um gesto. É a principal demora entre encostar o dedo e o cursor responder. Com
+   * valores baixos o leitor responde quase na hora, como o Jieshuo, mas o primeiro toque de um
+   * toque duplo pode mover o foco para o elemento sob o dedo, e um deslizar que começa devagar
+   * pode anunciar o elemento onde o dedo encostou.
+   *
+   * @return a espera em milissegundos, ou 0 para usar a do TalkBack
+   */
+  public static int esperaExploracaoMs() {
+    return esperaExploracao;
   }
 
   // ---------------------------------------------------------------------------------------------

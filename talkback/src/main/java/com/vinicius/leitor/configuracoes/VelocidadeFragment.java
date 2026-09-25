@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.preference.Preference;
 import com.google.android.accessibility.talkback.R;
 import com.google.android.accessibility.talkback.preference.base.TalkbackBaseFragment;
+import com.google.android.accessibility.utils.FeatureSupport;
 import com.vinicius.leitor.velocidade.ControleVelocidade;
 
 /** Tela Velocidade das configurações do Bro Blind Screen Reader. */
@@ -38,6 +39,23 @@ public class VelocidadeFragment extends TalkbackBaseFragment {
   @Override
   public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
     super.onCreatePreferences(savedInstanceState, rootKey);
+    Preference deteccao = findPreference(getString(R.string.pref_talkback_gesture_detection_key));
+    if (deteccao != null) {
+      if (!FeatureSupport.supportGestureDetection()) {
+        deteccao.setEnabled(false);
+        deteccao.setSummary("Disponível só no Android 13 ou mais novo.");
+      } else {
+        deteccao.setOnPreferenceChangeListener(
+            (preference, novoValor) -> {
+              Toast.makeText(
+                      requireContext(),
+                      "Desligue e ligue o leitor nas configurações de acessibilidade para aplicar.",
+                      Toast.LENGTH_LONG)
+                  .show();
+              return true;
+            });
+      }
+    }
     Preference restaurar = findPreference("bbsr_restaurar_padrao");
     if (restaurar != null) {
       restaurar.setOnPreferenceClickListener(

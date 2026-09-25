@@ -1044,6 +1044,10 @@ public class TalkBackService extends AccessibilityServiceCompat
     int eventType = event.getEventType();
     if (eventType == AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED) {
       MedidorLatencia.marcar("evento de foco recebido do Android");
+    } else if (eventType == AccessibilityEvent.TYPE_TOUCH_INTERACTION_START) {
+      // Bro Blind Screen Reader: a exploração por toque é medida desde o dedo encostar na tela
+      // (se virar um gesto, a medição recomeça quando o gesto é reconhecido).
+      MedidorLatencia.iniciarGesto("dedo encostou na tela", event.getEventTime());
     }
     if (eventType == AccessibilityEvent.TYPE_TOUCH_INTERACTION_START) {
       // TODO: Could move the logic of TOUCH_INTERACTION related event handling out of

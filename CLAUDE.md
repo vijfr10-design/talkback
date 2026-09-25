@@ -151,3 +151,19 @@
 - Telas: `PerfisGestosFragment` (res/xml/bbsr_perfis_gestos_preferences.xml),
   `EscolherAppFragment`, `PerfilAppFragment` (base `BaseGestosFragment`). Exportar/importar
   JSON (`formato: bro-blind-perfis-gestos`) pelo seletor de arquivos do Android.
+
+### Etapa 5: resposta ao toque (dedo na tela até o cursor)
+- Medições do usuário: foco 25-50 ms e fala 150-250 ms depois do gesto, sem diferença
+  sentida para o TalkBack. O que ele quer reduzir é o tempo do dedo encostar até o cursor
+  responder. A maior parte é a espera do reconhecimento de gestos antes de começar a
+  exploração por toque: ~300 ms no modo padrão (feito pelo Android, TouchExplorer, não dá
+  para mudar) e 250 ms no modo em que o próprio leitor reconhece os gestos
+  (`TouchInteractionMonitor.RequestTouchExplorationDelayed`, Android 13+, preferência
+  existente `pref_talkback_gesture_detection_key`, que fica nas opções de desenvolvedor).
+- Agora a tela Velocidade tem "Reconhecer gestos no próprio leitor" (mesma preferência;
+  precisa desligar e ligar o serviço) e "Espera para a exploração por toque começar"
+  (`bbsr_espera_exploracao`, 0 = padrão do TalkBack, até 50 ms), lida por
+  `ConfigVelocidade.esperaExploracaoMs()` em `RequestTouchExplorationDelayed.post`
+  (não vale para digitar com levantar o dedo). O Modo turbo usa 70 ms.
+- O medidor de latência agora também começa a contar em TYPE_TOUCH_INTERACTION_START
+  (dedo encostou), usando a hora do evento; um gesto reconhecido reinicia a contagem.

@@ -3,12 +3,31 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
   <com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory
+      android:key="bbsr_categoria_exploracao"
+      android:title="Resposta ao toque, como no Jieshuo">
+    <com.google.android.accessibility.material.preference.AccessibilitySuiteSwitchPreference
+        android:defaultValue="@bool/pref_talkback_gesture_detection_default"
+        android:key="@string/pref_talkback_gesture_detection_key"
+        android:summary="O próprio leitor reconhece os gestos, em vez do Android. É o que permite diminuir a espera abaixo. Precisa de Android 13 ou mais novo. Depois de mudar esta opção, desligue e ligue o leitor nas configurações de acessibilidade."
+        android:title="Reconhecer gestos no próprio leitor" />
+    <com.google.android.accessibility.material.preference.AccessibilitySuiteListPreference
+        android:defaultValue="0"
+        android:dependency="@string/pref_talkback_gesture_detection_key"
+        android:dialogTitle="Espera para a exploração por toque começar"
+        android:entries="@array/bbsr_espera_exploracao_nomes"
+        android:entryValues="@array/bbsr_espera_exploracao_valores"
+        android:key="bbsr_espera_exploracao"
+        android:summary="%s. Tempo entre o dedo encostar na tela e o cursor ir para o elemento. Com valores baixos, o primeiro toque de um toque duplo pode mover o foco para o elemento sob o dedo."
+        android:title="Espera para a exploração por toque começar" />
+  </com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory>
+
+  <com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory
       android:key="bbsr_categoria_otimizacoes"
       android:title="Otimizações">
     <com.google.android.accessibility.material.preference.AccessibilitySuiteSwitchPreference
         android:defaultValue="false"
         android:key="bbsr_modo_turbo"
-        android:summary="Aplica todos os atrasos no mínimo e liga o cache da ordem de travessia e o som imediato no foco. Pode causar falas fora de hora em alguns aplicativos."
+        android:summary="Aplica todos os atrasos no mínimo e liga o cache da ordem de travessia e o som imediato no foco. Com o reconhecimento de gestos no próprio leitor ligado, também usa 70 milissegundos de espera para a exploração por toque. Pode causar falas fora de hora em alguns aplicativos."
         android:title="Modo turbo" />
     <com.google.android.accessibility.material.preference.AccessibilitySuiteSwitchPreference
         android:defaultValue="true"

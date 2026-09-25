@@ -91,6 +91,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.Executor;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import com.vinicius.leitor.velocidade.ConfigVelocidade;
 
 /**
  * This class receives motion events from the framework for the purposes of figuring out whether an
@@ -1210,9 +1211,14 @@ public class TouchInteractionMonitor
             case IME -> typingFocusUserIntentTimeout;
             case NON_IME -> touchFocusUserIntentTimeout;
           };
-      if (remaining != 0) {
+      // Bro Blind Screen Reader: espera escolhida na seção Velocidade (0 = a do TalkBack).
+      int esperaBroBlind = isLiftToType ? 0 : ConfigVelocidade.esperaExploracaoMs();
+      if (esperaBroBlind > 0) {
+        actualDelay = (remaining != 0) ? Math.min(remaining, esperaBroBlind) : esperaBroBlind;
+      } else if (remaining != 0) {
         actualDelay = mDelay - (actualDelay - remaining);
-      } else {
+      }
+      if (remaining == 0) {
         startTime = postTime;
         if (postTimerClass == PostTimerClass.IME) {
           timerAction =
