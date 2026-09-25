@@ -53,6 +53,9 @@
     <!-- Required for binding AICore service for on-device AI features. -->
     <uses-permission android:name="com.google.android.apps.aicore.service.BIND_SERVICE"/>
 
+    <!-- Leitor Vini: abrir a tela de instalação do APK baixado pela verificação de atualização. -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
     <!-- Hardware compatibility. -->
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -236,6 +239,11 @@
             android:authorities="${applicationId}.providers.LabelProvider"
             android:exported="true"
             android:directBootAware="true" />
+
+        <!-- Leitor Vini: toque na notificação de atualização. -->
+        <receiver
+            android:name="com.vinicius.leitor.atualizacao.ReceptorAtualizacao"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

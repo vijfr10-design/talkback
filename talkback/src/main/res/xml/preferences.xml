@@ -129,4 +129,16 @@
         android:summary="@string/subtitle_pref_gup"
         android:title="@string/title_pref_gup" />
   </com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory>
+  <com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory
+      android:key="@string/pref_category_leitor_atualizacao_key"
+      android:title="@string/title_pref_category_leitor_atualizacao">
+    <com.google.android.accessibility.material.preference.AccessibilitySuiteSwitchPreference
+        android:defaultValue="@bool/pref_leitor_verificar_atualizacao_default"
+        android:key="@string/pref_leitor_verificar_atualizacao_key"
+        android:summary="@string/summary_pref_leitor_verificar_atualizacao"
+        android:title="@string/title_pref_leitor_verificar_atualizacao" />
+    <com.google.android.accessibility.material.preference.AccessibilitySuitePreference
+        android:key="@string/pref_leitor_verificar_agora_key"
+        android:title="@string/title_pref_leitor_verificar_agora" />
+  </com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory>
 </PreferenceScreen>

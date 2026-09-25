@@ -273,6 +273,7 @@ import com.google.android.accessibility.utils.output.SpeechControllerImpl;
 import com.google.android.accessibility.utils.output.SpeechControllerImpl.CapitalLetterHandlingMethod;
 import com.google.android.accessibility.utils.output.TextFormattingUtils;
 import com.google.android.libraries.accessibility.utils.log.LogUtils;
+import com.vinicius.leitor.atualizacao.VerificadorAtualizacao;
 import com.google.android.libraries.accessibility.utils.servicecompat.AccessibilityServiceCompat;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -589,6 +590,7 @@ public class TalkBackService extends AccessibilityServiceCompat
 
   /** Staged pipeline for separating interpreters, feedback-mappers, and actors. */
   private Pipeline pipeline;
+  private @Nullable VerificadorAtualizacao verificadorAtualizacao;
 
   /** Controller for audio and haptic feedback. */
   private FeedbackController feedbackController;
@@ -849,6 +851,10 @@ public class TalkBackService extends AccessibilityServiceCompat
   public boolean onUnbind(Intent intent) {
     LogUtils.d(TAG, "onUnbind start");
     final long turningOffTime = System.currentTimeMillis();
+    if (verificadorAtualizacao != null) {
+      verificadorAtualizacao.parar();
+      verificadorAtualizacao = null;
+    }
     interruptAllFeedback(/* stopTtsSpeechCompletely= */ false);
     storeTalkBackUserUsage();
     if (pipeline != null) {
@@ -1586,6 +1592,10 @@ public class TalkBackService extends AccessibilityServiceCompat
     helper.checkUpdate();
 
     compositor.handleEvent(Compositor.EVENT_SPOKEN_FEEDBACK_ON, talkbackOnEventId);
+
+    // Leitor Vini: verifica se há versão nova ao iniciar e depois uma vez por dia.
+    verificadorAtualizacao = new VerificadorAtualizacao(this, pipeline.getFeedbackReturner());
+    verificadorAtualizacao.iniciar();
 
     // If the locked-boot-completed intent was fired before onServiceConnected, we queued it,
     // so now we need to run it.

@@ -39,15 +39,32 @@ jobs:
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "ndk;21.4.7075529" > /dev/null
           echo "sdk.dir=$ANDROID_HOME" > local.properties
 
+      # Um único instante define a tag, o nome do arquivo e o versionCode (em build.gradle,
+      # versionCode = segundos desde 2024-01-01 UTC), então cada compilação é maior que a anterior.
+      - name: Definir versão
+        id: versao
+        run: |
+          EPOCH=$(date +%s)
+          DATA=$(TZ=America/Sao_Paulo date -d "@$EPOCH" +'%Y-%m-%d_%Hh%M')
+          TAG="v$(TZ=America/Sao_Paulo date -d "@$EPOCH" +'%Y.%m.%d-%H%M%S')"
+          VERSION_CODE=$(( EPOCH - 1704067200 ))
+          echo "LEITOR_BUILD_EPOCH=$EPOCH" >> "$GITHUB_ENV"
+          echo "LEITOR_VERSION_NAME=${TAG#v}" >> "$GITHUB_ENV"
+          echo "data=$DATA" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version_code=$VERSION_CODE" >> "$GITHUB_OUTPUT"
+          echo "Tag $TAG, versionCode $VERSION_CODE"
+
       - name: Compilar APK (celular, release)
         run: gradle --no-daemon --stacktrace -Dorg.gradle.jvmargs=-Xmx5g assemblePhoneRelease
 
       - name: Preparar arquivos
         id: preparar
+        env:
+          DATA: ${{ steps.versao.outputs.data }}
         run: |
           APK=$(find build/outputs/apk/phone/release -name '*.apk' | head -n 1)
           test -n "$APK"
-          DATA=$(TZ=America/Sao_Paulo date +'%Y-%m-%d_%Hh%M')
           mkdir -p saida
           cp "$APK" "saida/LeitorVini_${DATA}.apk"
           cp "$APK" "saida/LeitorVini.apk"
@@ -60,18 +77,24 @@ jobs:
           name: LeitorVini_${{ steps.preparar.outputs.data }}
           path: saida/LeitorVini_*.apk
 
-      # Cada compilação vira um Release novo marcado como "mais recente".
-      # O link fixo .../releases/latest/download/LeitorVini.apk sempre aponta para ele.
+      # Cada compilação vira um Release novo, com tag única baseada na data e hora
+      # (ex.: v2026.09.25-143005), marcado como "mais recente". Assim o Obtainium detecta a
+      # versão nova e o link fixo .../releases/latest/download/LeitorVini.apk aponta para ela.
+      # A linha "versionCode=N" das notas é lida pela verificação de atualização do app.
       - name: Publicar no GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
-          DATA: ${{ steps.preparar.outputs.data }}
+          DATA: ${{ steps.versao.outputs.data }}
+          TAG: ${{ steps.versao.outputs.tag }}
+          VERSION_CODE: ${{ steps.versao.outputs.version_code }}
         run: |
-          TAG="build-${GITHUB_RUN_NUMBER}"
+          printf '%s\n\n%s\n' \
+            "APK compilado em ${DATA} (horário de Brasília) a partir do commit ${GITHUB_SHA} na branch ${GITHUB_REF_NAME}." \
+            "versionCode=${VERSION_CODE}" > notas.txt
           gh release create "$TAG" \
             --repo "$GITHUB_REPOSITORY" \
             --target "$GITHUB_SHA" \
-            --title "Leitor Vini ${DATA} (compilação ${GITHUB_RUN_NUMBER}, branch ${GITHUB_REF_NAME})" \
-            --notes "APK compilado em ${DATA} (horário de Brasília) a partir do commit ${GITHUB_SHA} na branch ${GITHUB_REF_NAME}." \
+            --title "Leitor Vini ${TAG#v} (branch ${GITHUB_REF_NAME})" \
+            --notes-file notas.txt \
             --latest \
-            saida/LeitorVini_${DATA}.apk saida/LeitorVini.apk
+            "saida/LeitorVini_${DATA}.apk" saida/LeitorVini.apk

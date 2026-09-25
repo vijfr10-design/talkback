@@ -18,12 +18,14 @@ package com.google.android.accessibility.talkback.preference.base;
 import static com.google.android.accessibility.talkback.trainingcommon.TrainingUtils.GUP_SUPPORT_PORTAL_URL;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.widget.Toast;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -51,6 +53,8 @@ import com.google.android.accessibility.utils.PreferenceSettingsUtils;
 import com.google.android.accessibility.utils.SettingsUtils;
 import com.google.android.accessibility.utils.SharedPreferencesUtils;
 import com.google.android.accessibility.utils.monitor.InputDeviceMonitor;
+import com.google.android.accessibility.utils.material.A11yAlertDialogWrapper;
+import com.vinicius.leitor.atualizacao.VerificadorAtualizacao;
 import java.util.Optional;
 
 /** Fragment that holds the preference of Talkback settings. */
@@ -165,6 +169,58 @@ public class TalkBackPreferenceFragment extends TalkbackBaseFragment {
       removePreference(R.string.pref_category_audio_key, R.string.pref_auto_image_captioning_key);
     }
     updateGeminiPreferenceState();
+    configurarVerificarAtualizacaoAgora();
+  }
+
+  /** Leitor Vini: botão "Verificar atualização agora". */
+  private void configurarVerificarAtualizacaoAgora() {
+    Preference botao = findPreferenceByResId(R.string.pref_leitor_verificar_agora_key);
+    if (botao == null) {
+      return;
+    }
+    botao.setOnPreferenceClickListener(
+        preference -> {
+          Toast.makeText(context, R.string.leitor_atualizacao_verificando, Toast.LENGTH_SHORT)
+              .show();
+          VerificadorAtualizacao.verificar(
+              context,
+              (novaVersao, erro) -> {
+                if (!isAdded() || getActivity() == null) {
+                  return;
+                }
+                A11yAlertDialogWrapper.Builder dialogo =
+                    A11yAlertDialogWrapper.materialDialogBuilder(getActivity())
+                        .setTitle(getString(R.string.title_pref_leitor_verificar_agora));
+                if (erro != null) {
+                  dialogo
+                      .setMessage(getString(R.string.leitor_atualizacao_erro_verificar, erro))
+                      .setPositiveButton(
+                          android.R.string.ok,
+                          (DialogInterface dialogInterface, int i) -> dialogInterface.dismiss());
+                } else if (novaVersao == null) {
+                  dialogo
+                      .setMessage(getString(R.string.leitor_atualizacao_ja_atualizado))
+                      .setPositiveButton(
+                          android.R.string.ok,
+                          (DialogInterface dialogInterface, int i) -> dialogInterface.dismiss());
+                } else {
+                  dialogo
+                      .setMessage(
+                          getString(R.string.leitor_atualizacao_dialogo_mensagem, novaVersao.tag))
+                      .setPositiveButton(
+                          R.string.leitor_atualizacao_dialogo_baixar,
+                          (DialogInterface dialogInterface, int i) -> {
+                            dialogInterface.dismiss();
+                            VerificadorAtualizacao.baixarEInstalar(context, novaVersao.urlApk);
+                          })
+                      .setNegativeButton(
+                          android.R.string.cancel,
+                          (DialogInterface dialogInterface, int i) -> dialogInterface.cancel());
+                }
+                dialogo.create().show();
+              });
+          return true;
+        });
   }
 
   private void updateGeminiPreferenceState() {

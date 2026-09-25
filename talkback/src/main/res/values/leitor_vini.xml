@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Textos e chaves do Leitor Vini (não traduzidos; o app é usado em português). -->
+<resources>
+    <string name="pref_category_leitor_atualizacao_key" translatable="false">pref_category_leitor_atualizacao</string>
+    <string name="pref_leitor_verificar_atualizacao_key" translatable="false">pref_leitor_verificar_atualizacao</string>
+    <string name="pref_leitor_verificar_agora_key" translatable="false">pref_leitor_verificar_agora</string>
+    <bool name="pref_leitor_verificar_atualizacao_default">true</bool>
+
+    <string name="title_pref_category_leitor_atualizacao" translatable="false">Atualizações</string>
+    <string name="title_pref_leitor_verificar_atualizacao" translatable="false">Verificar atualizações automaticamente</string>
+    <string name="summary_pref_leitor_verificar_atualizacao" translatable="false">Ao iniciar e uma vez por dia, procura uma versão nova do Leitor Vini no GitHub</string>
+    <string name="title_pref_leitor_verificar_agora" translatable="false">Verificar atualização agora</string>
+
+    <string name="leitor_atualizacao_fala_disponivel" translatable="false">Atualização do Leitor Vini disponível.</string>
+    <string name="leitor_atualizacao_fala_baixando" translatable="false">Baixando atualização do Leitor Vini.</string>
+    <string name="leitor_atualizacao_notificacao_titulo" translatable="false">Atualização do Leitor Vini disponível</string>
+    <string name="leitor_atualizacao_notificacao_texto" translatable="false">Versão %1$s. Toque para baixar e instalar.</string>
+    <string name="leitor_atualizacao_baixando" translatable="false">Baixando atualização do Leitor Vini</string>
+    <string name="leitor_atualizacao_pronta" translatable="false">Atualização baixada. Toque para instalar.</string>
+    <string name="leitor_atualizacao_erro_download" translatable="false">Não foi possível baixar a atualização do Leitor Vini.</string>
+    <string name="leitor_atualizacao_verificando" translatable="false">Verificando atualização…</string>
+    <string name="leitor_atualizacao_ja_atualizado" translatable="false">Você já está usando a versão mais recente do Leitor Vini.</string>
+    <string name="leitor_atualizacao_erro_verificar" translatable="false">Não foi possível verificar a atualização: %1$s</string>
+    <string name="leitor_atualizacao_dialogo_mensagem" translatable="false">A versão %1$s está disponível. Deseja baixar e instalar agora?</string>
+    <string name="leitor_atualizacao_dialogo_baixar" translatable="false">Baixar e instalar</string>
+</resources>
