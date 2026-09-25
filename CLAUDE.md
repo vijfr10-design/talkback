@@ -130,3 +130,24 @@
   padrão. Nenhum som de terceiros no repositório.
 - Tela `SonsFragment` (res/xml/bbsr_sons_preferences.xml): escolher pasta, remover pacote e
   lista de cada evento sonoro com descrição, nome do arquivo e toque para ouvir.
+
+### Etapa 4: gestos e perfis
+- Perfil global = gestos do TalkBack (`pref_shortcut_*`, tela
+  TalkBackGestureShortcutPreferenceFragment). Perfis por app: preferências
+  `bbsr_perfil|<pacote>|<id do gesto>` (valor da ação ou `BBSR_USAR_GLOBAL`) e a lista
+  `bbsr_perfis_apps`; lógica em `talkback/.../com/vinicius/leitor/gestos/PerfisGestos.java`.
+  `GestureShortcutMapping.getActionKeyFromGestureId` e `isSupportedGesture` consultam o
+  perfil do app em primeiro plano (descoberto por `TalkBackService.
+  pacoteDoAplicativoEmPrimeiroPlano`, só recalculado depois de eventos de janela).
+- Todos os gestos de tela do Android podem receber ação (`GestureShortcutMapping.
+  gestosPersonalizaveis`); os três que a tela do TalkBack não mostrava (toque duplo,
+  toque duplo e segurar, dois dedos tocar e segurar) estão na tela Gestos e perfis.
+- Ações novas (`AcoesBroBlind`, valores `BBSR_*`, executadas em
+  `GestureController.performAction`): OCR da tela (captura + ML Kit), última notificação
+  (guardada em `TalkBackService.onAccessibilityEvent`), hora e bateria, alternar Modo
+  turbo, Fala enxuta e medidor. Repetir, copiar e pausar a fala reaproveitam as ações do
+  TalkBack. Aparecem na categoria "Bro Blind Screen Reader" da lista de ações
+  (`GestureListPreference.criarAcoesBroBlind`).
+- Telas: `PerfisGestosFragment` (res/xml/bbsr_perfis_gestos_preferences.xml),
+  `EscolherAppFragment`, `PerfilAppFragment` (base `BaseGestosFragment`). Exportar/importar
+  JSON (`formato: bro-blind-perfis-gestos`) pelo seletor de arquivos do Android.

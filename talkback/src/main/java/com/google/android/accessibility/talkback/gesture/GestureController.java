@@ -134,6 +134,7 @@ import java.util.HashSet;
 import java.util.Map;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import com.vinicius.leitor.gestos.AcoesBroBlind;
 
 /**
  * Class to handle incoming gestures to TalkBack. Make sure tutorial still works TODO: Map
@@ -262,6 +263,9 @@ public class GestureController {
       accessibilityFocusInterpreter.performSplitTap(EVENT_ID_UNTRACKED);
     } else if (action.equals(service.getString(R.string.shortcut_value_unassigned))) {
       // Do Nothing
+    } else if (AcoesBroBlind.ehAcao(action)) {
+      // Bro Blind Screen Reader: ações novas (OCR, notificação, hora e bateria, alternâncias).
+      result = AcoesBroBlind.executar(service, pipeline, action, eventId);
     } else if (action.equals(service.getString(R.string.shortcut_value_previous))) {
       result =
           pipeline.returnFeedback(

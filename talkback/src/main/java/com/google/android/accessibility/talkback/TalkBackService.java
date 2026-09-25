@@ -278,6 +278,8 @@ import com.google.android.libraries.accessibility.utils.log.LogUtils;
 import com.vinicius.leitor.atualizacao.VerificadorAtualizacao;
 import com.vinicius.leitor.latencia.ControleMedidor;
 import com.vinicius.leitor.latencia.MedidorLatencia;
+import com.vinicius.leitor.gestos.AcoesBroBlind;
+import com.vinicius.leitor.gestos.PerfisGestos;
 import com.vinicius.leitor.sons.PacoteSons;
 import com.vinicius.leitor.velocidade.CacheTravessia;
 import com.vinicius.leitor.velocidade.ControleVelocidade;
@@ -303,6 +305,7 @@ import java.util.stream.Stream;
 import kotlin.Unit;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import android.view.accessibility.AccessibilityWindowInfo;
 
 /** An {@link AccessibilityService} that provides spoken, haptic, and audible feedback. */
 public class TalkBackService extends AccessibilityServiceCompat
@@ -872,6 +875,7 @@ public class TalkBackService extends AccessibilityServiceCompat
       controleVelocidade.parar();
       controleVelocidade = null;
     }
+    PerfisGestos.parar();
     interruptAllFeedback(/* stopTtsSpeechCompletely= */ false);
     storeTalkBackUserUsage();
     if (pipeline != null) {
@@ -1033,6 +1037,8 @@ public class TalkBackService extends AccessibilityServiceCompat
     // Bro Blind Screen Reader: invalida a árvore de travessia guardada antes de qualquer
     // processamento, se o evento puder ter mudado a tela.
     CacheTravessia.aoReceberEvento(event);
+    PerfisGestos.aoReceberEvento(event);
+    AcoesBroBlind.registrarNotificacao(this, event);
     Performance perf = Performance.getInstance();
     EventId eventId = perf.onEventReceived(event);
     int eventType = event.getEventType();
@@ -1264,6 +1270,24 @@ public class TalkBackService extends AccessibilityServiceCompat
 
   private boolean isBrailleImeTouchInteracting() {
     return getBrailleImeForTalkBack() != null && getBrailleImeForTalkBack().isTouchInteracting();
+  }
+
+  /**
+   * Bro Blind Screen Reader: pacote do aplicativo em primeiro plano (a janela de aplicativo ativa
+   * ou com foco), usado para trocar o perfil de gestos.
+   */
+  private @Nullable String pacoteDoAplicativoEmPrimeiroPlano() {
+    for (AccessibilityWindowInfo janela : getWindows()) {
+      if (janela.getType() == AccessibilityWindowInfo.TYPE_APPLICATION
+          && (janela.isActive() || janela.isFocused())) {
+        AccessibilityNodeInfo raiz = janela.getRoot();
+        if (raiz != null && raiz.getPackageName() != null) {
+          return raiz.getPackageName().toString();
+        }
+      }
+    }
+    AccessibilityNodeInfo raiz = getRootInActiveWindow();
+    return (raiz == null || raiz.getPackageName() == null) ? null : raiz.getPackageName().toString();
   }
 
   @Override
@@ -1644,6 +1668,8 @@ public class TalkBackService extends AccessibilityServiceCompat
     controleVelocidade.iniciar();
     // Bro Blind Screen Reader: pacote de sons personalizado (se houver).
     PacoteSons.recarregar(this);
+    // Bro Blind Screen Reader: perfis de gestos por aplicativo.
+    PerfisGestos.iniciar(this::pacoteDoAplicativoEmPrimeiroPlano);
 
     // If the locked-boot-completed intent was fired before onServiceConnected, we queued it,
     // so now we need to run it.

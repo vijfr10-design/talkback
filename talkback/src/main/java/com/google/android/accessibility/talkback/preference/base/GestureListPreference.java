@@ -44,6 +44,8 @@ import com.google.common.collect.ImmutableList;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Optional;
+import com.vinicius.leitor.gestos.AcoesBroBlind;
+import com.vinicius.leitor.gestos.PerfisGestos;
 
 /**
  * A {@link DialogPreference} which contains a list for all TalkBack supported actions. It works
@@ -180,7 +182,35 @@ public final class GestureListPreference extends AccessibilitySuiteDialogPrefere
     addActionItemsToList(builder, createMenuControl());
     addActionItemsToList(builder, createTextEditing());
     addActionItemsToList(builder, createSpecialFeatures());
+    addActionItemsToList(builder, criarAcoesBroBlind());
     items = builder.build();
+  }
+
+  /** Bro Blind Screen Reader: categoria com as ações novas. */
+  private ImmutableList<ActionItem> criarAcoesBroBlind() {
+    ImmutableList.Builder<ActionItem> builder = ImmutableList.builder();
+    builder.add(new ActionItem("Bro Blind Screen Reader", "", TYPE_TITLE));
+    for (String[] item : AcoesBroBlind.itensDaLista(getContext())) {
+      builder.add(new ActionItem(item[0], item[1], TYPE_ACTION_ITEM));
+    }
+    return builder.build();
+  }
+
+  /**
+   * Bro Blind Screen Reader: acrescenta no início da lista a opção de usar a ação do perfil
+   * global (usado nos perfis de gestos por aplicativo).
+   */
+  public void adicionarOpcaoUsarGlobal(String texto) {
+    items =
+        ImmutableList.<ActionItem>builder()
+            .add(new ActionItem(texto, PerfisGestos.USAR_GLOBAL, TYPE_ACTION_ITEM))
+            .addAll(items)
+            .build();
+  }
+
+  /** Bro Blind Screen Reader: define o valor usado quando a preferência ainda não foi salva. */
+  public void definirValorInicial(String valor) {
+    initialValue = valor;
   }
 
   private static void addActionItemsToList(

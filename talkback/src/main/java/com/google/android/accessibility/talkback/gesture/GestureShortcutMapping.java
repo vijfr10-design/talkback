@@ -52,6 +52,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.vinicius.leitor.gestos.PerfisGestos;
 
 /**
  * The class provides gesture and action mappings in TalkBack for quick access. It updates cache
@@ -746,7 +747,30 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
    * @return action key string
    */
   public String getActionKeyFromGestureId(int gestureId) {
+    // Bro Blind Screen Reader: o perfil do aplicativo em primeiro plano, se houver, tem
+    // prioridade; gestos sem ação no perfil usam o perfil global (os gestos do TalkBack).
+    String acaoDoPerfil = PerfisGestos.acaoDoPerfil(prefs, gestureId);
+    if (acaoDoPerfil != null) {
+      return acaoDoPerfil;
+    }
     return getActionKeyFromGestureId(currentGestureSet, gestureId);
+  }
+
+  /**
+   * Bro Blind Screen Reader: ids de todos os gestos de tela que o Android entrega ao serviço e que
+   * podem receber uma ação (sem os de impressão digital), na ordem da tela de gestos.
+   */
+  public static List<Integer> gestosPersonalizaveis() {
+    List<Integer> ids = new ArrayList<>();
+    for (TalkBackGesture gesture : TalkBackGesture.values()) {
+      if (gesture.gestureType == FINGERPRINT || gesture.rtlType == RTL_GESTURE) {
+        continue;
+      }
+      if (!ids.contains(gesture.gestureId)) {
+        ids.add(gesture.gestureId);
+      }
+    }
+    return ids;
   }
 
   private String getActionKeyFromGestureId(int index, int gestureId) {
@@ -766,6 +790,9 @@ public class GestureShortcutMapping implements GestureShortcutProvider {
 
   /** Returns {@code true} if this gesture is supported. */
   public boolean isSupportedGesture(int gestureId) {
+    if (PerfisGestos.acaoDoPerfil(prefs, gestureId) != null) {
+      return true;
+    }
     String action = gestureIdToActionKey.get(0).get(gestureId);
     return action != null && !TextUtils.equals(action, actionGestureUnsupported);
   }

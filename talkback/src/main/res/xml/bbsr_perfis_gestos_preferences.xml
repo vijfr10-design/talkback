@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bro Blind Screen Reader: perfis de gestos. A lista de perfis é preenchida pelo fragmento. -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory
+      android:key="bbsr_categoria_perfil_global"
+      android:title="Perfil global">
+    <com.google.android.accessibility.material.preference.AccessibilitySuitePreference
+        android:fragment="com.google.android.accessibility.talkback.preference.base.TalkBackGestureShortcutPreferenceFragment"
+        android:key="bbsr_abrir_perfil_global"
+        android:summary="Os gestos usados em todos os aplicativos que não têm perfil próprio."
+        android:title="Editar o perfil global" />
+    <com.google.android.accessibility.talkback.preference.base.GestureListPreference
+        android:defaultValue="@string/pref_shortcut_1finger_2tap_default"
+        android:key="@string/pref_shortcut_1finger_2tap_key"
+        android:summary="%s"
+        android:title="Toque duplo com um dedo. Cuidado: normalmente ativa o elemento" />
+    <com.google.android.accessibility.talkback.preference.base.GestureListPreference
+        android:defaultValue="@string/pref_shortcut_1finger_2tap_hold_default"
+        android:key="@string/pref_shortcut_1finger_2tap_hold_key"
+        android:summary="%s"
+        android:title="Tocar duas vezes e segurar com um dedo" />
+    <com.google.android.accessibility.talkback.preference.base.GestureListPreference
+        android:defaultValue="@string/pref_shortcut_2finger_1tap_hold_default"
+        android:key="@string/pref_shortcut_2finger_1tap_hold_key"
+        android:summary="%s"
+        android:title="Tocar e segurar com dois dedos" />
+  </com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory>
+  <com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory
+      android:key="bbsr_categoria_perfis_apps"
+      android:title="Perfis por aplicativo">
+    <com.google.android.accessibility.material.preference.AccessibilitySuitePreference
+        android:key="bbsr_adicionar_perfil"
+        android:summary="O perfil do aplicativo passa a valer sozinho quando ele estiver em primeiro plano. Gestos sem ação no perfil usam o perfil global."
+        android:title="Adicionar perfil para um aplicativo" />
+  </com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory>
+  <com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory
+      android:key="bbsr_categoria_arquivo_perfis"
+      android:title="Arquivo">
+    <com.google.android.accessibility.material.preference.AccessibilitySuitePreference
+        android:key="bbsr_exportar_perfis"
+        android:summary="Salva o perfil global e os perfis de aplicativo em um arquivo."
+        android:title="Exportar perfis" />
+    <com.google.android.accessibility.material.preference.AccessibilitySuitePreference
+        android:key="bbsr_importar_perfis"
+        android:summary="Substitui os perfis atuais pelos de um arquivo exportado."
+        android:title="Importar perfis" />
+  </com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory>
+</PreferenceScreen>

@@ -147,6 +147,11 @@
         android:key="@string/pref_bbsr_sons_key"
         android:summary="@string/summary_pref_bbsr_sons"
         android:title="@string/title_pref_bbsr_sons" />
+    <com.google.android.accessibility.material.preference.AccessibilitySuitePreference
+        android:fragment="com.vinicius.leitor.configuracoes.PerfisGestosFragment"
+        android:key="@string/pref_bbsr_gestos_key"
+        android:summary="@string/summary_pref_bbsr_gestos"
+        android:title="@string/title_pref_bbsr_gestos" />
   </com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory>
   <com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory
       android:key="@string/pref_category_leitor_atualizacao_key"

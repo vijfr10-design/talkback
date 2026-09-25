@@ -75,4 +75,8 @@
     <string name="pref_bbsr_sons_key" translatable="false">pref_bbsr_sons</string>
     <string name="title_pref_bbsr_sons" translatable="false">Sons</string>
     <string name="summary_pref_bbsr_sons" translatable="false">Pacote de sons personalizado de uma pasta do celular e lista para ouvir cada som</string>
+
+    <string name="pref_bbsr_gestos_key" translatable="false">pref_bbsr_gestos</string>
+    <string name="title_pref_bbsr_gestos" translatable="false">Gestos e perfis</string>
+    <string name="summary_pref_bbsr_gestos" translatable="false">Perfil global, perfis por aplicativo que trocam sozinhos, gestos extras e exportar ou importar</string>
 </resources>
