@@ -55,6 +55,7 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import com.vinicius.leitor.latencia.MedidorLatencia;
 
 /** Helps FocusActor execute focus actions. */
 // TODO: Merge FocusActor with FocusManagerInternal.
@@ -443,10 +444,17 @@ public class FocusManagerInternal {
       @NonNull FocusActionInfo focusActionInfo,
       @Nullable EventId eventId) {
     long currentTime = SystemClock.uptimeMillis();
+    long inicioFoco = MedidorLatencia.agora();
     boolean result =
         pipeline.returnFeedback(
             eventId,
             Feedback.nodeAction(node, AccessibilityNodeInfoCompat.ACTION_ACCESSIBILITY_FOCUS));
+    if (inicioFoco != 0) {
+      MedidorLatencia.duracao("aplicação do foco (ACTION_ACCESSIBILITY_FOCUS)", inicioFoco);
+      if (result) {
+        MedidorLatencia.registrarFoco();
+      }
+    }
     if (result) {
       focusActionInfo = updateFocusActionInfoIfNecessary(focusActionInfo, node);
       // AccessibilityFocusActionHistory makes copy of the node, no need to obtain() here.

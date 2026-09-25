@@ -82,6 +82,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import com.vinicius.leitor.latencia.MedidorLatencia;
 
 /** Handles text-to-speech. It should be operated in the thread initializing the instance. */
 public class SpeechControllerImpl implements SpeechController {
@@ -1135,6 +1136,7 @@ public class SpeechControllerImpl implements SpeechController {
       return;
     }
 
+    MedidorLatencia.registrarTextoMontado(text);
     text = replaceSpanByContentDescription(text);
     text = replaceBrailleSymbolByDescription(mContext, text);
     final FeedbackItem pendingItem =

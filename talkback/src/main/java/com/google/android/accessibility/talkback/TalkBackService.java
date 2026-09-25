@@ -75,6 +75,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.media.AudioManager;
 import android.os.Build;
+import android.view.MotionEvent;
 import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -222,6 +223,7 @@ import com.google.android.accessibility.talkback.utils.VerbosityPreferences;
 import com.google.android.accessibility.utils.AccessibilityEventListener;
 import com.google.android.accessibility.utils.AccessibilityEventUtils;
 import com.google.android.accessibility.utils.AccessibilityNodeInfoUtils;
+import com.google.android.accessibility.utils.AccessibilityServiceCompatUtils;
 import com.google.android.accessibility.utils.BuildVersionUtils;
 import com.google.android.accessibility.utils.FeatureSupport;
 import com.google.android.accessibility.utils.FocusFinder;
@@ -274,6 +276,8 @@ import com.google.android.accessibility.utils.output.SpeechControllerImpl.Capita
 import com.google.android.accessibility.utils.output.TextFormattingUtils;
 import com.google.android.libraries.accessibility.utils.log.LogUtils;
 import com.vinicius.leitor.atualizacao.VerificadorAtualizacao;
+import com.vinicius.leitor.latencia.ControleMedidor;
+import com.vinicius.leitor.latencia.MedidorLatencia;
 import com.google.android.libraries.accessibility.utils.servicecompat.AccessibilityServiceCompat;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -591,6 +595,7 @@ public class TalkBackService extends AccessibilityServiceCompat
   /** Staged pipeline for separating interpreters, feedback-mappers, and actors. */
   private Pipeline pipeline;
   private @Nullable VerificadorAtualizacao verificadorAtualizacao;
+  private @Nullable ControleMedidor controleMedidor;
 
   /** Controller for audio and haptic feedback. */
   private FeedbackController feedbackController;
@@ -855,6 +860,10 @@ public class TalkBackService extends AccessibilityServiceCompat
       verificadorAtualizacao.parar();
       verificadorAtualizacao = null;
     }
+    if (controleMedidor != null) {
+      controleMedidor.parar();
+      controleMedidor = null;
+    }
     interruptAllFeedback(/* stopTtsSpeechCompletely= */ false);
     storeTalkBackUserUsage();
     if (pipeline != null) {
@@ -1016,6 +1025,9 @@ public class TalkBackService extends AccessibilityServiceCompat
     Performance perf = Performance.getInstance();
     EventId eventId = perf.onEventReceived(event);
     int eventType = event.getEventType();
+    if (eventType == AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED) {
+      MedidorLatencia.marcar("evento de foco recebido do Android");
+    }
     if (eventType == AccessibilityEvent.TYPE_TOUCH_INTERACTION_START) {
       // TODO: Could move the logic of TOUCH_INTERACTION related event handling out of
       // TalkBackService, and concentrated in a dedicated module such as ?
@@ -1245,11 +1257,26 @@ public class TalkBackService extends AccessibilityServiceCompat
 
   @Override
   protected boolean onGesture(int gestureId) {
+    MedidorLatencia.iniciarGesto(
+        AccessibilityServiceCompatUtils.gestureIdToString(gestureId), /* instanteGestoMs= */ -1);
     return handleOnGestureById(Display.DEFAULT_DISPLAY, gestureId);
   }
 
   @Override
   public boolean onGesture(AccessibilityGestureEvent accessibilityGestureEvent) {
+    if (MedidorLatencia.estaLigado()) {
+      long instanteGesto = -1;
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        List<MotionEvent> movimentos = accessibilityGestureEvent.getMotionEvents();
+        if (!movimentos.isEmpty()) {
+          instanteGesto = movimentos.get(movimentos.size() - 1).getEventTime();
+        }
+      }
+      MedidorLatencia.iniciarGesto(
+          AccessibilityServiceCompatUtils.gestureIdToString(
+              accessibilityGestureEvent.getGestureId()),
+          instanteGesto);
+    }
     if (handleOnGestureById(
         accessibilityGestureEvent.getDisplayId(), accessibilityGestureEvent.getGestureId())) {
       pipeline
@@ -1596,6 +1623,10 @@ public class TalkBackService extends AccessibilityServiceCompat
     // Leitor Vini: verifica se há versão nova ao iniciar e depois uma vez por dia.
     verificadorAtualizacao = new VerificadorAtualizacao(this, pipeline.getFeedbackReturner());
     verificadorAtualizacao.iniciar();
+
+    // Bro Blind Screen Reader: medidor de latência (desligado por padrão).
+    controleMedidor = new ControleMedidor(this, pipeline.getFeedbackReturner());
+    controleMedidor.iniciar();
 
     // If the locked-boot-completed intent was fired before onServiceConnected, we queued it,
     // so now we need to run it.

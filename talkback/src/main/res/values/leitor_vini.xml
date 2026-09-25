@@ -23,4 +23,11 @@
     <string name="leitor_atualizacao_erro_verificar" translatable="false">Não foi possível verificar a atualização: %1$s</string>
     <string name="leitor_atualizacao_dialogo_mensagem" translatable="false">A versão %1$s está disponível. Deseja baixar e instalar agora?</string>
     <string name="leitor_atualizacao_dialogo_baixar" translatable="false">Baixar e instalar</string>
+
+    <!-- Seção Velocidade -->
+    <string name="pref_category_bbsr_velocidade_key" translatable="false">pref_category_bbsr_velocidade</string>
+    <string name="title_pref_category_bbsr_velocidade" translatable="false">Velocidade</string>
+    <string name="pref_bbsr_medidor_latencia_key" translatable="false">pref_bbsr_medidor_latencia</string>
+    <string name="title_pref_bbsr_medidor_latencia" translatable="false">Medidor de latência</string>
+    <string name="summary_pref_bbsr_medidor_latencia" translatable="false">Depois de cada gesto, fala o tempo em milissegundos do gesto até o foco e do gesto até o início da fala. Detalhes de cada fase ficam no log com a etiqueta BBSR-Latencia.</string>
 </resources>

@@ -86,6 +86,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import com.vinicius.leitor.latencia.MedidorLatencia;
 
 /**
  * Wrapper for {@link TextToSpeech} that handles fail-over when a specific engine does not work.
@@ -439,6 +440,10 @@ public class FailoverTextToSpeech {
       failureException = e;
       result = TextToSpeech.ERROR;
       allowDeviceSleep();
+    }
+
+    if (result == TextToSpeech.SUCCESS) {
+      MedidorLatencia.registrarEnvioTts(utteranceId);
     }
 
     if (result == TextToSpeech.ERROR) {
@@ -1561,6 +1566,7 @@ public class FailoverTextToSpeech {
       if (utteranceId.startsWith(CACHE_UTTERANCE_ID_PREFIX)) {
         return;
       }
+      MedidorLatencia.registrarInicioAudio(utteranceId);
       Performance.getInstance().onFeedbackReady(utteranceId);
       if (shouldHandleTtsCallbackInHandlerThread) {
         mHandler.onUtteranceStarted(utteranceId);

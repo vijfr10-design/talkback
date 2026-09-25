@@ -119,6 +119,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import com.vinicius.leitor.latencia.MedidorLatencia;
 
 /** Handles the use case of logical navigation actions. */
 public class FocusProcessorForLogicalNavigation {
@@ -1107,6 +1108,7 @@ public class FocusProcessorForLogicalNavigation {
       boolean ignoreDescendantsOfPivot,
       NavigationAction navigationAction,
       EventId eventId) {
+    long inicioNavegacao = MedidorLatencia.agora();
     int searchDirection = navigationAction.searchDirection;
     int logicalDirection =
         TraversalStrategyUtils.getLogicalDirection(
@@ -1123,8 +1125,13 @@ public class FocusProcessorForLogicalNavigation {
       return true;
     }
 
+    long inicioArvore = MedidorLatencia.agora();
     TraversalStrategy traversalStrategy =
         TraversalStrategyUtils.getTraversalStrategy(rootNode, focusFinder, searchDirection);
+    if (inicioArvore != 0) {
+      MedidorLatencia.duracao(
+          "consultas aos nós (árvore da ordem de travessia)", inicioArvore);
+    }
 
     Filter<AccessibilityNodeInfoCompat> nodeFilter =
         NavigationTarget.createNodeFilter(
@@ -1251,6 +1258,9 @@ public class FocusProcessorForLogicalNavigation {
       }
     }
 
+    if (inicioNavegacao != 0) {
+      MedidorLatencia.duracao("cálculo do próximo elemento na navegação", inicioNavegacao);
+    }
     if (target != null) {
       int linkIndexToFocus = getLinkIndexForFocus(pivot, navigationResult, navigationAction);
       if (linkIndexToFocus >= 0) {

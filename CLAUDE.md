@@ -70,3 +70,26 @@
 - Configurações (tela principal, categoria "Atualizações"): chave para ligar/desligar
   (padrão ligado) e botão "Verificar atualização agora" (mostra diálogo com o resultado),
   tratado em `TalkBackPreferenceFragment`.
+
+## Compilação local (sessões do Claude)
+- O ambiente não vem com Android SDK, mas dá para instalar: command-line tools em
+  `/opt/android-sdk` (`platforms;android-36`, `build-tools;36.0.0`), JDK 17 Temurin
+  em `/opt/jdk-17*`, `local.properties` com `sdk.dir=/opt/android-sdk` (ignorado pelo
+  git) e um init script local em `~/.gradle/init.d/` trocando o Maven Central pelo
+  espelho `https://maven-central.storage-download.googleapis.com/maven2/` (o Central
+  devolve 429). Com isso, `gradle :compilePhoneReleaseJavaWithJavac` checa o Java em
+  ~1 min, sem NDK. O APK final continua sendo feito pelo GitHub Actions.
+
+## Melhorias de velocidade e personalização
+### Etapa 1: medidor de latência
+- `utils/src/main/java/com/vinicius/leitor/latencia/MedidorLatencia.java`: medição
+  estática, barata quando desligada. Pontos de marcação: `TalkBackService.onGesture`
+  (início; usa o horário do último MotionEvent do gesto quando o Android entrega),
+  `FocusProcessorForLogicalNavigation.navigateToDefaultOrMacroGranularityTarget`
+  (árvore de travessia e cálculo do próximo), `FocusManagerInternal.
+  performAccessibilityFocusActionInternal` (aplicação do foco), evento
+  TYPE_VIEW_ACCESSIBILITY_FOCUSED, `SpeechControllerImpl.speak` (texto montado),
+  `FailoverTextToSpeech.speak` (envio ao TTS) e `onStart` do TTS (início do áudio).
+- Fala "Foco X, fala Y milissegundos" (fila, sem histórico) e registra as fases no
+  log com a tag `BBSR-Latencia`. Preferência `pref_bbsr_medidor_latencia` (padrão
+  desligado), controlada por `ControleMedidor` (módulo talkback).
