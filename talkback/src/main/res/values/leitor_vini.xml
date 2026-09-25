@@ -71,4 +71,8 @@
         <item>3.0</item>
         <item>4.0</item>
     </string-array>
+
+    <string name="pref_bbsr_sons_key" translatable="false">pref_bbsr_sons</string>
+    <string name="title_pref_bbsr_sons" translatable="false">Sons</string>
+    <string name="summary_pref_bbsr_sons" translatable="false">Pacote de sons personalizado de uma pasta do celular e lista para ouvir cada som</string>
 </resources>

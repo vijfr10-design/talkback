@@ -120,3 +120,13 @@
   `FalaEnxutaFragment` (bbsr_fala_enxuta_preferences.xml), na categoria "Personalização do
   Bro Blind" da tela principal. Chaves `bbsr_*` definidas em `ConfigVelocidade`.
   `ControleVelocidade` carrega e observa as preferências no serviço.
+
+### Etapa 3: sons
+- `utils/.../com/vinicius/leitor/sons/PacoteSons.java`: importa da pasta escolhida no
+  seletor do Android (ACTION_OPEN_DOCUMENT_TREE) os arquivos cujo nome é o de um som do
+  leitor (`PacoteSons.NOMES`, = nomes dos recursos R.raw) em ogg/mp3/wav/mid/midi, copiando
+  para `filesDir/pacote_sons/`. `FeedbackController.playAuditory` consulta o pacote antes do
+  som original (SoundPool para ogg/mp3/wav; MediaPlayer para MIDI). Sons que faltam usam o
+  padrão. Nenhum som de terceiros no repositório.
+- Tela `SonsFragment` (res/xml/bbsr_sons_preferences.xml): escolher pasta, remover pacote e
+  lista de cada evento sonoro com descrição, nome do arquivo e toque para ouvir.

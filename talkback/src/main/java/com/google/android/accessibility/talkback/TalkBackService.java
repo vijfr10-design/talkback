@@ -278,6 +278,7 @@ import com.google.android.libraries.accessibility.utils.log.LogUtils;
 import com.vinicius.leitor.atualizacao.VerificadorAtualizacao;
 import com.vinicius.leitor.latencia.ControleMedidor;
 import com.vinicius.leitor.latencia.MedidorLatencia;
+import com.vinicius.leitor.sons.PacoteSons;
 import com.vinicius.leitor.velocidade.CacheTravessia;
 import com.vinicius.leitor.velocidade.ControleVelocidade;
 import com.google.android.libraries.accessibility.utils.servicecompat.AccessibilityServiceCompat;
@@ -1641,6 +1642,8 @@ public class TalkBackService extends AccessibilityServiceCompat
     // Bro Blind Screen Reader: seção Velocidade (atrasos, cache de travessia, som imediato).
     controleVelocidade = new ControleVelocidade(this);
     controleVelocidade.iniciar();
+    // Bro Blind Screen Reader: pacote de sons personalizado (se houver).
+    PacoteSons.recarregar(this);
 
     // If the locked-boot-completed intent was fired before onServiceConnected, we queued it,
     // so now we need to run it.

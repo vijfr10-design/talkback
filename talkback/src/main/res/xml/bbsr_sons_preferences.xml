@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bro Blind Screen Reader: pacote de sons. A lista de sons é preenchida pelo SonsFragment. -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory
+      android:key="bbsr_categoria_pacote"
+      android:title="Pacote de sons">
+    <com.google.android.accessibility.material.preference.AccessibilitySuitePreference
+        android:key="bbsr_pacote_estado"
+        android:selectable="false"
+        android:title="Pacote atual" />
+    <com.google.android.accessibility.material.preference.AccessibilitySuitePreference
+        android:key="bbsr_pacote_escolher"
+        android:summary="Abre o seletor de pastas do Android. Os arquivos da pasta com os nomes dos sons abaixo, em ogg, mp3, wav ou mid, substituem os originais. Os que faltarem continuam com o som padrão."
+        android:title="Escolher pasta do pacote de sons" />
+    <com.google.android.accessibility.material.preference.AccessibilitySuitePreference
+        android:key="bbsr_pacote_remover"
+        android:summary="Volta todos os sons ao padrão."
+        android:title="Remover pacote de sons" />
+  </com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory>
+  <com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory
+      android:key="bbsr_categoria_lista_sons"
+      android:title="Sons do leitor. Toque em um som para ouvir">
+  </com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory>
+</PreferenceScreen>

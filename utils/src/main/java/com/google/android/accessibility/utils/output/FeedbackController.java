@@ -37,6 +37,8 @@ import java.util.HashSet;
 import java.util.Set;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import java.io.File;
+import com.vinicius.leitor.sons.PacoteSons;
 
 /** A feedback controller that caches sounds for quicker playback. */
 public class FeedbackController {
@@ -74,6 +76,11 @@ public class FeedbackController {
 
   /** Map from the resource IDs of loaded sounds to SoundPool sound IDs. */
   private final SparseIntArray mSoundIds = new SparseIntArray();
+
+  /** Bro Blind Screen Reader: sons do pacote personalizado já carregados no SoundPool. */
+  private final SparseIntArray somIdsPersonalizados = new SparseIntArray();
+
+  private int versaoPacoteCarregada = -1;
 
   private final HapticPatternParser parser;
 
@@ -222,6 +229,37 @@ public class FeedbackController {
     LogUtils.v(TAG, "playAuditory() resId=%d eventId=%s", resId, eventId);
 
     final float adjustedVolume = ignoreVolumeAdjustment ? volume : volume * mVolumeAdjustment;
+
+    // Bro Blind Screen Reader: pacote de sons personalizado. Se houver um arquivo com o nome deste
+    // som, ele substitui o original; senão, o som padrão toca normalmente.
+    if (versaoPacoteCarregada != PacoteSons.versao()) {
+      for (int i = 0; i < somIdsPersonalizados.size(); i++) {
+        mSoundPool.unload(somIdsPersonalizados.valueAt(i));
+      }
+      somIdsPersonalizados.clear();
+      versaoPacoteCarregada = PacoteSons.versao();
+    }
+    File personalizado = PacoteSons.arquivoPara(mContext, resId);
+    if (personalizado != null) {
+      if (PacoteSons.ehMidi(personalizado)) {
+        PacoteSons.tocarMidi(mContext, personalizado, adjustedVolume);
+        return;
+      }
+      int somPersonalizado = somIdsPersonalizados.get(resId);
+      if (somPersonalizado != 0) {
+        new EarconsPlayTask(mSoundPool, somPersonalizado, adjustedVolume, rate).execute();
+      } else {
+        mSoundPool.setOnLoadCompleteListener(
+            (soundPool, sampleId, status) -> {
+              if (mAuditoryEnabled && sampleId != 0 && status == 0) {
+                new EarconsPlayTask(mSoundPool, sampleId, adjustedVolume, rate).execute();
+              }
+            });
+        somIdsPersonalizados.put(resId, mSoundPool.load(personalizado.getAbsolutePath(), 1));
+      }
+      return;
+    }
+
     int soundId = mSoundIds.get(resId);
 
     if (soundId != 0) {
