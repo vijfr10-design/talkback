@@ -48,6 +48,7 @@ public final class ControleVelocidade {
   }
 
   public void iniciar() {
+    corrigirEsperaAntiga(prefs);
     ConfigVelocidade.carregar(prefs);
     prefs.registerOnSharedPreferenceChangeListener(ouvinte);
     CacheTravessia.iniciar(
@@ -63,6 +64,31 @@ public final class ControleVelocidade {
   public void parar() {
     prefs.unregisterOnSharedPreferenceChangeListener(ouvinte);
     CacheTravessia.parar();
+  }
+
+  /**
+   * Versões anteriores ofereciam 70 e 50 ms de espera para a exploração por toque, valores que
+   * impediam o reconhecimento do toque duplo e dos deslizes. Troca o valor guardado por 150 ms,
+   * que tem folga para todos os gestos, para a tela Velocidade mostrar o que está valendo.
+   */
+  private static void corrigirEsperaAntiga(SharedPreferences prefs) {
+    try {
+      String guardado = prefs.getString(ConfigVelocidade.CHAVE_ESPERA_EXPLORACAO, null);
+      if (guardado == null) {
+        return;
+      }
+      int valor = Integer.parseInt(guardado);
+      if (valor > 0 && valor < ConfigVelocidade.ESPERA_EXPLORACAO_MINIMA_MS) {
+        prefs
+            .edit()
+            .putString(
+                ConfigVelocidade.CHAVE_ESPERA_EXPLORACAO,
+                Integer.toString(ConfigVelocidade.ESPERA_EXPLORACAO_SEGURA_MS))
+            .apply();
+      }
+    } catch (NumberFormatException | ClassCastException e) {
+      prefs.edit().remove(ConfigVelocidade.CHAVE_ESPERA_EXPLORACAO).apply();
+    }
   }
 
   /** Volta todas as opções da seção Velocidade ao padrão. */

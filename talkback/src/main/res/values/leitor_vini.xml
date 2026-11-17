@@ -83,17 +83,13 @@
     <string-array name="bbsr_espera_exploracao_nomes" translatable="false">
         <item>Padrão do TalkBack, 250 milissegundos</item>
         <item>200 milissegundos</item>
-        <item>150 milissegundos</item>
-        <item>100 milissegundos</item>
-        <item>70 milissegundos</item>
-        <item>50 milissegundos</item>
+        <item>150 milissegundos, rápido e seguro para os gestos</item>
+        <item>100 milissegundos, o mais rápido, pode perder gestos lentos</item>
     </string-array>
     <string-array name="bbsr_espera_exploracao_valores" translatable="false">
         <item>0</item>
         <item>200</item>
         <item>150</item>
         <item>100</item>
-        <item>70</item>
-        <item>50</item>
     </string-array>
 </resources>

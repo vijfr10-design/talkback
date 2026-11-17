@@ -17,7 +17,7 @@
         android:entries="@array/bbsr_espera_exploracao_nomes"
         android:entryValues="@array/bbsr_espera_exploracao_valores"
         android:key="bbsr_espera_exploracao"
-        android:summary="%s. Tempo entre o dedo encostar na tela e o cursor ir para o elemento. Com valores baixos, o primeiro toque de um toque duplo pode mover o foco para o elemento sob o dedo."
+        android:summary="%s. Tempo que o dedo fica parado na tela até o cursor ir para o elemento. Em 150 milissegundos todos os gestos continuam funcionando. Em 100, um deslize que começa devagar ou um toque duplo mais lento pode não ser reconhecido."
         android:title="Espera para a exploração por toque começar" />
   </com.google.android.accessibility.material.preference.AccessibilitySuitePreferenceCategory>
 
@@ -27,7 +27,7 @@
     <com.google.android.accessibility.material.preference.AccessibilitySuiteSwitchPreference
         android:defaultValue="false"
         android:key="bbsr_modo_turbo"
-        android:summary="Aplica todos os atrasos no mínimo e liga o cache da ordem de travessia e o som imediato no foco. Com o reconhecimento de gestos no próprio leitor ligado, também usa 70 milissegundos de espera para a exploração por toque. Pode causar falas fora de hora em alguns aplicativos."
+        android:summary="Aplica todos os atrasos no mínimo e liga o cache da ordem de travessia e o som imediato no foco. Com o reconhecimento de gestos no próprio leitor ligado, também usa 150 milissegundos de espera para a exploração por toque. Pode causar falas fora de hora em alguns aplicativos."
         android:title="Modo turbo" />
     <com.google.android.accessibility.material.preference.AccessibilitySuiteSwitchPreference
         android:defaultValue="true"

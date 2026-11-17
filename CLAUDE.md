@@ -167,3 +167,24 @@
   (não vale para digitar com levantar o dedo). O Modo turbo usa 70 ms.
 - O medidor de latência agora também começa a contar em TYPE_TOUCH_INTERACTION_START
   (dedo encostou), usando a hora do evento; um gesto reconhecido reinicia a contagem.
+
+### Etapa 5b: correção dos gestos não reconhecidos (novembro de 2026)
+- Problema relatado: com a espera em 70 ou 50 ms (ou Modo turbo, que usava 70 ms), o toque
+  duplo e os deslizes não eram reconhecidos. Causa: quando a exploração por toque começa, o
+  Android (TouchExplorer, estado TOUCH_EXPLORING) para de entregar ACTION_MOVE/ACTION_UP ao
+  leitor e ignora o ACTION_DOWN seguinte, então o reconhecedor nunca vê o fim do primeiro
+  toque. Além disso, a espera curta também encurtava a janela do segundo toque
+  (`Math.min(remaining, espera)` em `RequestTouchExplorationDelayed.post`).
+- Regra atual: a espera nunca fica abaixo de `ConfigVelocidade.ESPERA_EXPLORACAO_MINIMA_MS`
+  (100 ms = `ViewConfiguration.getTapTimeout()`, o tempo máximo que `MultiTap` aceita para um
+  toque; é também o menor valor que o próprio TalkBack oferece, opção 150 menos 50). Depois de
+  o dedo levantar dentro do tempo de um toque, a janela volta à do TalkBack (250 ms desde o
+  dedo encostar). Opções da tela: padrão, 200, 150 e 100. Valores antigos guardados são
+  trocados por 150 (`ESPERA_EXPLORACAO_SEGURA_MS`) em `ControleVelocidade.corrigirEsperaAntiga`,
+  e o Modo turbo usa 150 ms. Em 100 ms não há folga: um toque de 85 a 100 ms com o fim
+  atrasado, um deslize que não anda 1 cm em 100 ms e o segundo dedo de um gesto de vários
+  dedos que demora mais de 100 ms ainda se perdem (revisão independente do código).
+- NÃO baixar esse mínimo. Para o cursor responder mais rápido que 100 ms sem perder gestos
+  (como o Jieshuo), o caminho é outro: manter o Android em TOUCH_INTERACTING e o próprio
+  leitor pôr o foco no elemento sob o dedo (achado pelas coordenadas do MotionEvent),
+  desfazendo esse foco se o toque acabar virando toque duplo ou deslize. Ainda não foi feito.

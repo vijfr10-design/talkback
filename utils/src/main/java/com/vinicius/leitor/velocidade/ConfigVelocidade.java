@@ -49,8 +49,28 @@ public final class ConfigVelocidade {
   public static final String CHAVE_OMITIR_DICAS = "bbsr_omitir_dicas";
   public static final String CHAVE_ESPERA_EXPLORACAO = "bbsr_espera_exploracao";
 
+  /**
+   * Menor espera aceita para a exploração por toque começar. É o tempo máximo que o reconhecedor
+   * de gestos aceita para um toque (ViewConfiguration.getTapTimeout(), 100 ms): um dedo que fica
+   * mais que isso parado na tela já não pode ser um toque nem o começo de um toque duplo, então
+   * começar a exploração nesse ponto, em princípio, não tira o toque duplo. Abaixo disso (os
+   * antigos 70 e 50 ms) a exploração começava antes de um toque normal terminar, o Android parava
+   * de entregar os movimentos ao leitor e o toque duplo e os deslizes deixavam de ser
+   * reconhecidos. Em 100 ms não sobra folga: um toque de 85 a 100 ms cujo fim chega com alguns
+   * milissegundos de atraso ainda pode se perder, um deslize precisa andar 1 cm nesses 100 ms e o
+   * segundo dedo de um gesto de vários dedos precisa encostar nesse tempo.
+   */
+  public static final int ESPERA_EXPLORACAO_MINIMA_MS = 100;
+
+  /**
+   * Espera com folga para todos os gestos: 150 ms é o tempo que o reconhecedor dá para um deslize
+   * começar (config_max_time_to_start_swipe_ms_per_cm) e deixa 50 ms de sobra para o fim de um
+   * toque. Usada pelo Modo turbo e para substituir os valores antigos de 70 e 50 ms.
+   */
+  public static final int ESPERA_EXPLORACAO_SEGURA_MS = 150;
+
   /** Espera usada pelo Modo turbo para começar a exploração por toque. */
-  private static final int ESPERA_EXPLORACAO_TURBO_MS = 70;
+  private static final int ESPERA_EXPLORACAO_TURBO_MS = ESPERA_EXPLORACAO_SEGURA_MS;
 
   // Grupos de atrasos.
   public static final int GRUPO_TOQUE = 0;
@@ -115,6 +135,12 @@ public final class ConfigVelocidade {
     esperaExploracao = lerInteiro(prefs, CHAVE_ESPERA_EXPLORACAO, 0);
     if (turbo && (esperaExploracao == 0 || esperaExploracao > ESPERA_EXPLORACAO_TURBO_MS)) {
       esperaExploracao = ESPERA_EXPLORACAO_TURBO_MS;
+    }
+    if (esperaExploracao < 0) {
+      esperaExploracao = 0;
+    } else if (esperaExploracao > 0 && esperaExploracao < ESPERA_EXPLORACAO_MINIMA_MS) {
+      // Valores antigos (70 e 50 ms) guardados por versões anteriores.
+      esperaExploracao = ESPERA_EXPLORACAO_SEGURA_MS;
     }
     boolean enxuta = prefs.getBoolean(CHAVE_FALA_ENXUTA, false);
     omitirTipo = enxuta && prefs.getBoolean(CHAVE_OMITIR_TIPO, true);
@@ -312,12 +338,11 @@ public final class ConfigVelocidade {
    * Espera entre o dedo encostar na tela e a exploração por toque começar, quando o próprio
    * leitor reconhece os gestos (TouchInteractionMonitor, Android 13+). No TalkBack essa espera é
    * de 250 ms (tempo do toque duplo do Android menos 50 ms) e existe para decidir se o toque é o
-   * começo de um gesto. É a principal demora entre encostar o dedo e o cursor responder. Com
-   * valores baixos o leitor responde quase na hora, como o Jieshuo, mas o primeiro toque de um
-   * toque duplo pode mover o foco para o elemento sob o dedo, e um deslizar que começa devagar
-   * pode anunciar o elemento onde o dedo encostou.
+   * começo de um gesto. É a principal demora entre encostar o dedo e o cursor responder. O
+   * mínimo é {@link #ESPERA_EXPLORACAO_MINIMA_MS}; um deslize que não anda 1 cm dentro da espera
+   * anuncia o elemento onde o dedo encostou em vez de virar gesto.
    *
-   * @return a espera em milissegundos, ou 0 para usar a do TalkBack
+   * @return a espera em milissegundos (nunca abaixo do mínimo), ou 0 para usar a do TalkBack
    */
   public static int esperaExploracaoMs() {
     return esperaExploracao;

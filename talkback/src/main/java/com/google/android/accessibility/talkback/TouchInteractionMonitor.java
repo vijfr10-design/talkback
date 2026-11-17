@@ -1211,14 +1211,20 @@ public class TouchInteractionMonitor
             case IME -> typingFocusUserIntentTimeout;
             case NON_IME -> touchFocusUserIntentTimeout;
           };
-      // Bro Blind Screen Reader: espera escolhida na seção Velocidade (0 = a do TalkBack).
+      // Bro Blind Screen Reader: espera escolhida na seção Velocidade (0 = a do TalkBack). Só
+      // encurta a espera enquanto o dedo está parado na tela. Ela nunca fica abaixo do tempo
+      // máximo de um toque (ConfigVelocidade garante), senão o toque vira exploração antes de o
+      // dedo levantar e o Android para de mandar os movimentos para o reconhecedor de gestos.
       int esperaBroBlind = isLiftToType ? 0 : ConfigVelocidade.esperaExploracaoMs();
-      if (esperaBroBlind > 0) {
-        actualDelay = (remaining != 0) ? Math.min(remaining, esperaBroBlind) : esperaBroBlind;
-      } else if (remaining != 0) {
-        actualDelay = mDelay - (actualDelay - remaining);
+      if (esperaBroBlind > 0 && esperaBroBlind < actualDelay) {
+        actualDelay = esperaBroBlind;
       }
-      if (remaining == 0) {
+      if (remaining != 0) {
+        // O dedo levantou dentro do tempo de um toque (pode ser o primeiro toque de um toque
+        // duplo): volta para a janela inteira do TalkBack, contada desde o dedo encostar, para o
+        // segundo toque ter o mesmo tempo de sempre para chegar.
+        actualDelay = mDelay - (actualDelay - remaining);
+      } else {
         startTime = postTime;
         if (postTimerClass == PostTimerClass.IME) {
           timerAction =
